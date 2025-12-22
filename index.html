@@ -60,15 +60,76 @@
       font-size: 1.5rem;
     }
 
-    nav a {
+    /* Desktop Navigation */
+    .desktop-nav {
+      display: flex;
+    }
+
+    .desktop-nav a {
       color: var(--light);
       margin: 0 1rem;
       text-decoration: none;
       font-weight: 300;
       transition: color 0.3s;
+      padding: 0.5rem 0;
+      position: relative;
     }
 
-    nav a:hover {
+    .desktop-nav a:hover {
+      color: var(--primary);
+    }
+
+    .desktop-nav a.active {
+      color: var(--primary);
+    }
+
+    .desktop-nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+    }
+
+    /* Mobile Navigation */
+    .mobile-nav-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: black;
+      padding: 1rem;
+      z-index: 99;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-nav a {
+      color: var(--light);
+      text-decoration: none;
+      padding: 0.8rem 1rem;
+      border-radius: 5px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mobile-nav a:hover, .mobile-nav a.active {
+      background: var(--dark-light);
       color: var(--primary);
     }
 
@@ -130,11 +191,11 @@
       color: #000;
     }
 
-    /* Products */
+    /* Products Section - MOBILE FRIENDLY 2 PER ROW */
     .products {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 2rem;
+      gap: 1.5rem;
       padding: 4rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
@@ -565,42 +626,143 @@
       to { transform: translateX(0); opacity: 1; }
     }
 
-    /* Responsive */
+    /* RESPONSIVE DESIGN - MOBILE */
     @media (max-width: 768px) {
+      /* Header & Navigation */
       header {
-        flex-direction: column;
         padding: 1rem;
-        gap: 1rem;
       }
-
-      nav {
+      
+      .desktop-nav {
+        display: none;
+      }
+      
+      .mobile-nav-btn {
+        display: block;
+      }
+      
+      .mobile-nav.show {
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 0.5rem;
       }
-
-      nav a {
-        margin: 0 0.5rem;
+      
+      .logo h1 {
+        font-size: 1.5rem;
       }
-
+      
+      /* Hero Section */
+      .hero {
+        height: 70vh;
+        padding: 1rem;
+      }
+      
       .hero h2 {
         font-size: 2.2rem;
       }
-
+      
+      .hero p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+      
+      /* PRODUCTS - 2 PER ROW ON MOBILE */
       .products {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+        gap: 1rem;
         padding: 2rem 1rem;
       }
-
+      
+      .product {
+        margin-bottom: 0;
+      }
+      
+      .product img {
+        height: 200px;
+      }
+      
+      .product-content {
+        padding: 1rem;
+      }
+      
+      .product h3 {
+        font-size: 1.1rem;
+      }
+      
+      .product-price {
+        font-size: 1.2rem;
+      }
+      
+      .product-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .quantity-selector {
+        justify-content: center;
+      }
+      
+      /* Cart */
+      #cart {
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+      }
+      
       #cart-items {
         width: 95%;
         right: 2.5%;
-        top: 5rem;
+        top: 4rem;
+        padding: 1rem;
       }
-
+      
+      .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+      
+      .cart-item-quantity {
+        align-self: flex-end;
+      }
+      
+      .cart-actions {
+        flex-direction: column;
+      }
+      
+      /* Modal */
       .modal-content {
         width: 95%;
         padding: 1.5rem;
+        margin: 1rem;
+      }
+      
+      /* Footer */
+      footer {
+        padding: 1.5rem 1rem;
+      }
+    }
+    
+    /* For very small screens (phones under 400px) */
+    @media (max-width: 400px) {
+      .products {
+        grid-template-columns: 1fr; /* 1 column on very small screens */
+      }
+      
+      .hero h2 {
+        font-size: 1.8rem;
+      }
+    }
+    
+    /* Tablet View */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .products {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns on tablet */
+        padding: 3rem 1.5rem;
+      }
+      
+      .desktop-nav a {
+        margin: 0 0.8rem;
+        font-size: 0.95rem;
       }
     }
 
@@ -616,6 +778,12 @@
       margin-bottom: 1rem;
       color: var(--gray);
     }
+    
+    /* Active nav link highlight */
+    .active-nav {
+      color: var(--primary) !important;
+      font-weight: 600 !important;
+    }
   </style>
 </head>
 <body>
@@ -625,13 +793,36 @@
       <i class="fas fa-crown"></i>
       <h1>LuxeWear</h1>
     </div>
-    <nav>
-      <a href="#"><i class="fas fa-home"></i> Home</a>
-      <a href="#products"><i class="fas fa-shopping-bag"></i> Shop</a>
-      <a href="#"><i class="fas fa-info-circle"></i> About</a>
-      <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+    
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav">
+      <a href="#" class="active-nav" data-section="home">Home</a>
+      <a href="#products" data-section="shop">Shop</a>
+      <a href="#about" data-section="about">About</a>
+      <a href="#contact" data-section="contact">Contact</a>
     </nav>
+    
+    <!-- Mobile Navigation Button -->
+    <button class="mobile-nav-btn" id="mobile-nav-btn">
+      <i class="fas fa-bars"></i>
+    </button>
   </header>
+  
+  <!-- Mobile Navigation Menu -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#" class="active-nav" data-section="home">
+      <i class="fas fa-home"></i> Home
+    </a>
+    <a href="#products" data-section="shop">
+      <i class="fas fa-shopping-bag"></i> Shop
+    </a>
+    <a href="#about" data-section="about">
+      <i class="fas fa-info-circle"></i> About
+    </a>
+    <a href="#contact" data-section="contact">
+      <i class="fas fa-envelope"></i> Contact
+    </a>
+  </div>
 
   <div class="hero">
     <h2>Redefine Luxury Fashion</h2>
@@ -663,7 +854,7 @@
 
   <section id="products" class="products">
     <div class="product">
-      <img src="martin double shole.jpeg" alt="Premium Sneakers">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Premium Sneakers">
       <div class="product-content">
         <h3>Martin Double Sole</h3>
         <div class="product-rating">
@@ -687,7 +878,7 @@
     </div>
     
     <div class="product">
-      <img src="airforce.jpeg" alt="Nike Airforce Shoes">
+      <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Nike Airforce Shoes">
       <div class="product-content">
         <h3>Airforce 1</h3>
         <div class="product-rating">
@@ -711,7 +902,7 @@
     </div>
     
     <div class="product">
-      <img src="playboy casual.jpeg" alt="Casual Shoes">
+      <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1398&q=80" alt="Casual Shoes">
       <div class="product-content">
         <h3>Playboy Casual</h3>
         <div class="product-rating">
@@ -735,7 +926,7 @@
     </div>
     
     <div class="product">
-      <img src="chelsea boots.jpeg" alt="Chelsea Boots">
+      <img src="https://images.unsplash.com/photo-1529810313688-44ea1c2d62d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1390&q=80" alt="Chelsea Boots">
       <div class="product-content">
         <h3>Chelsea Boot</h3>
         <div class="product-rating">
@@ -754,6 +945,101 @@
             <button class="quantity-btn plus" data-id="4">+</button>
           </div>
           <button class="btn add-to-cart" data-id="4" data-name="Chelsea Boot" data-price="1200">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Additional Products for Testing -->
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Running Shoes">
+      <div class="product-content">
+        <h3>Running Pro</h3>
+        <div class="product-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
+        </div>
+        <div class="product-price">Rs 899 <span class="product-old-price">Rs 1299</span></div>
+        <p>Lightweight running shoes with maximum cushioning for athletes.</p>
+        <div class="product-actions">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" data-id="5">-</button>
+            <input type="text" class="quantity-input" value="1" data-id="5" readonly>
+            <button class="quantity-btn plus" data-id="5">+</button>
+          </div>
+          <button class="btn add-to-cart" data-id="5" data-name="Running Pro" data-price="899">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Basketball Shoes">
+      <div class="product-content">
+        <h3>Basketball Elite</h3>
+        <div class="product-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+          <i class="far fa-star"></i>
+        </div>
+        <div class="product-price">Rs 1599 <span class="product-old-price">Rs 2199</span></div>
+        <p>High-performance basketball shoes with ankle support and grip.</p>
+        <div class="product-actions">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" data-id="6">-</button>
+            <input type="text" class="quantity-input" value="1" data-id="6" readonly>
+            <button class="quantity-btn plus" data-id="6">+</button>
+          </div>
+          <button class="btn add-to-cart" data-id="6" data-name="Basketball Elite" data-price="1599">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" style="padding: 4rem 2rem; max-width: 1200px; margin: 0 auto;">
+    <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); text-align: center; margin-bottom: 2rem; font-size: 2.5rem;">About LuxeWear</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
+      <div style="flex: 1; min-width: 300px;">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="About LuxeWear" style="width: 100%; border-radius: 10px;">
+      </div>
+      <div style="flex: 1; min-width: 300px;">
+        <h3 style="color: var(--light); margin-bottom: 1rem;">Our Story</h3>
+        <p style="margin-bottom: 1rem;">LuxeWear was founded with a simple mission: to provide premium footwear that combines luxury, comfort, and style. We believe that everyone deserves to walk in shoes that make them feel confident and elegant.</p>
+        <p>Our collection is carefully curated from the finest materials, ensuring durability and exceptional quality. Each pair is designed to elevate your everyday style while providing all-day comfort.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" style="padding: 4rem 2rem; background: var(--dark-light);">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); text-align: center; margin-bottom: 2rem; font-size: 2.5rem;">Contact Us</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+        <div style="flex: 1; min-width: 300px;">
+          <h3 style="color: var(--light); margin-bottom: 1rem;">Get in Touch</h3>
+          <div style="margin-bottom: 1.5rem;">
+            <p><i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 10px;"></i> Kathmandu, Nepal</p>
+            <p><i class="fas fa-phone" style="color: var(--primary); margin-right: 10px;"></i> +977 9827716886</p>
+            <p><i class="fas fa-envelope" style="color: var(--primary); margin-right: 10px;"></i> info@luxewear.com</p>
+          </div>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+          <form id="contact-form" style="display: flex; flex-direction: column; gap: 1rem;">
+            <input type="text" placeholder="Your Name" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);">
+            <input type="email" placeholder="Your Email" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);">
+            <textarea placeholder="Your Message" rows="4" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);"></textarea>
+            <button type="submit" class="btn" style="align-self: flex-start;">Send Message</button>
+          </form>
         </div>
       </div>
     </div>
@@ -845,6 +1131,9 @@
     const modalItemsEl = document.getElementById('modal-items');
     const modalTotalEl = document.getElementById('modal-total');
     const notificationEl = document.getElementById('notification');
+    const mobileNavBtn = document.getElementById('mobile-nav-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    const navLinks = document.querySelectorAll('nav a, .mobile-nav a');
     
     // Update cart display
     function updateCartDisplay() {
@@ -1021,7 +1310,7 @@
     // Send order via WhatsApp
     function sendOrderViaWhatsApp(formData) {
       const message = generateWhatsAppMessage(formData);
-      const whatsappURL = `https://wa.me/${+9779827716886}?text=${message}`;
+      const whatsappURL = `https://wa.me/${YOUR_PHONE_NUMBER}?text=${message}`;
       
       // Open WhatsApp in new tab
       window.open(whatsappURL, '_blank');
@@ -1035,6 +1324,32 @@
       showNotification('Order placed successfully! Check WhatsApp to confirm.');
     }
     
+    // Mobile Navigation Toggle
+    function toggleMobileNav() {
+      mobileNav.classList.toggle('show');
+    }
+    
+    // Set active nav link
+    function setActiveNav(section) {
+      navLinks.forEach(link => {
+        link.classList.remove('active-nav');
+        if (link.getAttribute('data-section') === section) {
+          link.classList.add('active-nav');
+        }
+      });
+    }
+    
+    // Smooth scrolling for anchor links
+    function smoothScroll(targetId) {
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    }
+    
     // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
       // Initial cart display
@@ -1043,6 +1358,31 @@
       // Cart button toggle
       cartBtn.addEventListener('click', () => {
         cartItemsEl.style.display = cartItemsEl.style.display === 'block' ? 'none' : 'block';
+      });
+      
+      // Mobile navigation toggle
+      mobileNavBtn.addEventListener('click', toggleMobileNav);
+      
+      // Navigation link clicks
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const section = link.getAttribute('data-section');
+          
+          // Set active nav
+          setActiveNav(section);
+          
+          // Handle anchor links
+          const href = link.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            smoothScroll(href);
+            e.preventDefault();
+          }
+          
+          // Close mobile nav if open
+          if (mobileNav.classList.contains('show')) {
+            mobileNav.classList.remove('show');
+          }
+        });
       });
       
       // Add to cart buttons
@@ -1118,6 +1458,13 @@
       document.addEventListener('click', (e) => {
         if (!cartItemsEl.contains(e.target) && !cartBtn.contains(e.target)) {
           cartItemsEl.style.display = 'none';
+        }
+      });
+      
+      // Close mobile nav when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!mobileNav.contains(e.target) && !mobileNavBtn.contains(e.target)) {
+          mobileNav.classList.remove('show');
         }
       });
     });
