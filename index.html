@@ -507,7 +507,8 @@
     }
 
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
       width: 100%;
       padding: 0.8rem;
       background: #2a2a2a;
@@ -518,7 +519,8 @@
     }
 
     .form-group input:focus,
-    .form-group textarea:focus {
+    .form-group textarea:focus,
+    .form-group select:focus {
       outline: none;
       border-color: var(--primary);
     }
@@ -571,6 +573,262 @@
       background: #1da851;
     }
 
+    /* CUSTOMER REVIEWS SECTION */
+    .reviews-section {
+      padding: 4rem 2rem;
+      background: var(--dark-light);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--gray);
+      margin-bottom: 3rem;
+    }
+
+    .reviews-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .average-rating {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .rating-number {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .rating-stars {
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .rating-count {
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+
+    .write-review-btn {
+      background: var(--primary);
+      color: #000;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .review-card {
+      background: var(--dark);
+      border-radius: 10px;
+      padding: 1.5rem;
+      border: 1px solid #333;
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .reviewer-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .reviewer-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+      font-size: 1.2rem;
+    }
+
+    .reviewer-name {
+      font-weight: 600;
+      color: var(--light);
+    }
+
+    .review-date {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .review-rating {
+      color: var(--primary);
+    }
+
+    .review-product {
+      background: rgba(212, 175, 55, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      margin: 1rem 0;
+      display: inline-block;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .review-text {
+      margin: 1rem 0;
+      line-height: 1.6;
+    }
+
+    .review-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .like-btn, .reply-btn {
+      background: transparent;
+      border: 1px solid #444;
+      color: var(--light);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s;
+    }
+
+    .like-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .like-btn.liked {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+    }
+
+    .review-form-container {
+      background: var(--dark);
+      border-radius: 10px;
+      padding: 2rem;
+      margin-top: 2rem;
+      border: 1px solid #333;
+      display: none;
+    }
+
+    .review-form-container.show {
+      display: block;
+    }
+
+    .review-form h3 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .star-rating-input {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      gap: 5px;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    .star-rating-input input {
+      display: none;
+    }
+
+    .star-rating-input label {
+      font-size: 2rem;
+      color: #444;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .star-rating-input input:checked ~ label,
+    .star-rating-input label:hover,
+    .star-rating-input label:hover ~ label {
+      color: var(--primary);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .review-form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .review-form-actions button {
+      padding: 0.8rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cancel-review-btn {
+      background: transparent;
+      border: 1px solid #444;
+      color: var(--light);
+    }
+
+    .submit-review-btn {
+      background: var(--primary);
+      color: #000;
+      border: none;
+    }
+
+    .no-reviews {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray);
+      grid-column: 1 / -1;
+    }
+
     /* Footer */
     footer {
       background: black;
@@ -578,7 +836,6 @@
       padding: 2rem;
       color: var(--gray);
       font-size: 0.9rem;
-      margin-top: 3rem;
     }
 
     .footer-content {
@@ -666,7 +923,7 @@
       
       /* PRODUCTS - 2 PER ROW ON MOBILE */
       .products {
-        grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+        grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
         padding: 2rem 1rem;
       }
@@ -698,6 +955,33 @@
       
       .quantity-selector {
         justify-content: center;
+      }
+      
+      /* Reviews Section */
+      .reviews-section {
+        padding: 2rem 1rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .reviews-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .review-form-container {
+        padding: 1.5rem;
       }
       
       /* Cart */
@@ -745,7 +1029,7 @@
     /* For very small screens (phones under 400px) */
     @media (max-width: 400px) {
       .products {
-        grid-template-columns: 1fr; /* 1 column on very small screens */
+        grid-template-columns: 1fr;
       }
       
       .hero h2 {
@@ -756,8 +1040,12 @@
     /* Tablet View */
     @media (min-width: 769px) and (max-width: 1024px) {
       .products {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns on tablet */
+        grid-template-columns: repeat(3, 1fr);
         padding: 3rem 1.5rem;
+      }
+      
+      .reviews-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
       
       .desktop-nav a {
@@ -798,6 +1086,7 @@
     <nav class="desktop-nav">
       <a href="#" class="active-nav" data-section="home">Home</a>
       <a href="#products" data-section="shop">Shop</a>
+      <a href="#reviews" data-section="reviews">Reviews</a>
       <a href="#about" data-section="about">About</a>
       <a href="#contact" data-section="contact">Contact</a>
     </nav>
@@ -815,6 +1104,9 @@
     </a>
     <a href="#products" data-section="shop">
       <i class="fas fa-shopping-bag"></i> Shop
+    </a>
+    <a href="#reviews" data-section="reviews">
+      <i class="fas fa-star"></i> Reviews
     </a>
     <a href="#about" data-section="about">
       <i class="fas fa-info-circle"></i> About
@@ -863,6 +1155,7 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star-half-alt"></i>
+          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(42)</span>
         </div>
         <div class="product-price">Rs 999 <span class="product-old-price">Rs 1499</span></div>
         <p>Premium leather double sole shoes for maximum comfort and style.</p>
@@ -887,6 +1180,7 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
+          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(56)</span>
         </div>
         <div class="product-price">Rs 1499 <span class="product-old-price">Rs 1999</span></div>
         <p>Classic white Nike Airforce 1 sneakers, timeless design and comfort.</p>
@@ -911,6 +1205,7 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="far fa-star"></i>
+          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(38)</span>
         </div>
         <div class="product-price">Rs 799 <span class="product-old-price">Rs 1199</span></div>
         <p>Stylish casual shoes perfect for everyday wear with premium comfort.</p>
@@ -935,6 +1230,7 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star-half-alt"></i>
+          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(29)</span>
         </div>
         <div class="product-price">Rs 1200 <span class="product-old-price">Rs 1699</span></div>
         <p>Elegant Chelsea boots made with genuine leather, perfect for formal occasions.</p>
@@ -948,53 +1244,95 @@
         </div>
       </div>
     </div>
-    
-    <!-- Additional Products for Testing -->
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Running Shoes">
-      <div class="product-content">
-        <h3>Running Pro</h3>
-        <div class="product-rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="far fa-star"></i>
-        </div>
-        <div class="product-price">Rs 899 <span class="product-old-price">Rs 1299</span></div>
-        <p>Lightweight running shoes with maximum cushioning for athletes.</p>
-        <div class="product-actions">
-          <div class="quantity-selector">
-            <button class="quantity-btn minus" data-id="5">-</button>
-            <input type="text" class="quantity-input" value="1" data-id="5" readonly>
-            <button class="quantity-btn plus" data-id="5">+</button>
+  </section>
+
+  <!-- CUSTOMER REVIEWS SECTION -->
+  <section id="reviews" class="reviews-section">
+    <div class="reviews-container">
+      <h2 class="section-title">Customer Reviews</h2>
+      <p class="section-subtitle">See what our customers are saying about our products</p>
+      
+      <div class="reviews-header">
+        <div class="average-rating">
+          <div class="rating-number" id="average-rating">4.5</div>
+          <div>
+            <div class="rating-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <div class="rating-count" id="total-reviews">Based on 125 reviews</div>
           </div>
-          <button class="btn add-to-cart" data-id="5" data-name="Running Pro" data-price="899">Add to Cart</button>
         </div>
+        
+        <button class="write-review-btn" id="write-review-btn">
+          <i class="fas fa-edit"></i> Write a Review
+        </button>
       </div>
-    </div>
-    
-    <div class="product">
-      <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Basketball Shoes">
-      <div class="product-content">
-        <h3>Basketball Elite</h3>
-        <div class="product-rating">
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star"></i>
-          <i class="fas fa-star-half-alt"></i>
-          <i class="far fa-star"></i>
-        </div>
-        <div class="product-price">Rs 1599 <span class="product-old-price">Rs 2199</span></div>
-        <p>High-performance basketball shoes with ankle support and grip.</p>
-        <div class="product-actions">
-          <div class="quantity-selector">
-            <button class="quantity-btn minus" data-id="6">-</button>
-            <input type="text" class="quantity-input" value="1" data-id="6" readonly>
-            <button class="quantity-btn plus" data-id="6">+</button>
+      
+      <div class="reviews-grid" id="reviews-grid">
+        <!-- Reviews will be loaded here dynamically -->
+      </div>
+      
+      <div class="review-form-container" id="review-form-container">
+        <form class="review-form" id="review-form">
+          <h3>Write Your Review</h3>
+          
+          <div class="form-group">
+            <label>Select Product</label>
+            <select id="review-product" required>
+              <option value="">Select a product...</option>
+              <option value="Martin Double Sole">Martin Double Sole</option>
+              <option value="Airforce 1">Airforce 1</option>
+              <option value="Playboy Casual">Playboy Casual</option>
+              <option value="Chelsea Boot">Chelsea Boot</option>
+            </select>
           </div>
-          <button class="btn add-to-cart" data-id="6" data-name="Basketball Elite" data-price="1599">Add to Cart</button>
-        </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" id="reviewer-name" required placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label>Your Email</label>
+              <input type="email" id="reviewer-email" required placeholder="Enter your email">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Rating</label>
+            <div class="star-rating-input">
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5"><i class="fas fa-star"></i></label>
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4"><i class="fas fa-star"></i></label>
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3"><i class="fas fa-star"></i></label>
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2"><i class="fas fa-star"></i></label>
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1"><i class="fas fa-star"></i></label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Review Title</label>
+            <input type="text" id="review-title" required placeholder="Summarize your experience">
+          </div>
+          
+          <div class="form-group">
+            <label>Your Review</label>
+            <textarea id="review-text" rows="4" required placeholder="Share your experience with this product..."></textarea>
+          </div>
+          
+          <div class="review-form-actions">
+            <button type="button" class="cancel-review-btn" id="cancel-review-btn">Cancel</button>
+            <button type="submit" class="submit-review-btn">Submit Review</button>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -1116,6 +1454,54 @@
     let cart = JSON.parse(localStorage.getItem('luxewear-cart')) || [];
     const YOUR_PHONE_NUMBER = "+9779827716886"; // Your WhatsApp number
     
+    // Initialize reviews from localStorage or default reviews
+    let reviews = JSON.parse(localStorage.getItem('luxewear-reviews')) || [
+      {
+        id: 1,
+        name: "Alex Johnson",
+        email: "alex@example.com",
+        product: "Martin Double Sole",
+        rating: 5,
+        title: "Excellent Quality!",
+        review: "These shoes are absolutely fantastic! The leather quality is top-notch and they're incredibly comfortable right out of the box. Worth every penny!",
+        date: "2025-01-15",
+        likes: 12
+      },
+      {
+        id: 2,
+        name: "Sarah Miller",
+        email: "sarah@example.com",
+        product: "Airforce 1",
+        rating: 5,
+        title: "Best sneakers ever",
+        review: "I've owned multiple pairs of Airforce 1s over the years, but these are by far the best quality I've seen. Perfect fit and amazing comfort.",
+        date: "2025-01-10",
+        likes: 8
+      },
+      {
+        id: 3,
+        name: "David Wilson",
+        email: "david@example.com",
+        product: "Chelsea Boot",
+        rating: 4,
+        title: "Great for formal occasions",
+        review: "Wore these to a wedding and received multiple compliments. The leather is soft and they broke in nicely after a couple of wears.",
+        date: "2025-01-05",
+        likes: 5
+      },
+      {
+        id: 4,
+        name: "Emma Thompson",
+        email: "emma@example.com",
+        product: "Playboy Casual",
+        rating: 4,
+        title: "Perfect everyday shoes",
+        review: "These have become my go-to shoes for daily wear. They're comfortable, stylish, and hold up well even with regular use.",
+        date: "2024-12-28",
+        likes: 7
+      }
+    ];
+    
     // DOM Elements
     const cartCountEl = document.getElementById('cart-count');
     const cartTotalEl = document.getElementById('cart-total');
@@ -1134,6 +1520,15 @@
     const mobileNavBtn = document.getElementById('mobile-nav-btn');
     const mobileNav = document.getElementById('mobile-nav');
     const navLinks = document.querySelectorAll('nav a, .mobile-nav a');
+    
+    // Review DOM Elements
+    const reviewsGridEl = document.getElementById('reviews-grid');
+    const averageRatingEl = document.getElementById('average-rating');
+    const totalReviewsEl = document.getElementById('total-reviews');
+    const writeReviewBtn = document.getElementById('write-review-btn');
+    const reviewFormContainer = document.getElementById('review-form-container');
+    const reviewForm = document.getElementById('review-form');
+    const cancelReviewBtn = document.getElementById('cancel-review-btn');
     
     // Update cart display
     function updateCartDisplay() {
@@ -1173,6 +1568,126 @@
           `;
           cartListEl.appendChild(li);
         });
+      }
+    }
+    
+    // Update reviews display
+    function updateReviewsDisplay() {
+      // Calculate average rating
+      if (reviews.length === 0) {
+        averageRatingEl.textContent = "0.0";
+        totalReviewsEl.textContent = "No reviews yet";
+      } else {
+        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+        const averageRating = totalRating / reviews.length;
+        averageRatingEl.textContent = averageRating.toFixed(1);
+        totalReviewsEl.textContent = `Based on ${reviews.length} reviews`;
+      }
+      
+      // Clear reviews grid
+      reviewsGridEl.innerHTML = '';
+      
+      // Show message if no reviews
+      if (reviews.length === 0) {
+        const noReviewsEl = document.createElement('div');
+        noReviewsEl.className = 'no-reviews';
+        noReviewsEl.innerHTML = `
+          <i class="fas fa-comment-alt" style="font-size: 3rem; margin-bottom: 1rem; color: var(--gray);"></i>
+          <h3>No reviews yet</h3>
+          <p>Be the first to share your experience!</p>
+        `;
+        reviewsGridEl.appendChild(noReviewsEl);
+        return;
+      }
+      
+      // Display reviews
+      reviews.forEach(review => {
+        const reviewEl = document.createElement('div');
+        reviewEl.className = 'review-card';
+        reviewEl.dataset.id = review.id;
+        
+        // Generate star rating
+        let starsHtml = '';
+        for (let i = 1; i <= 5; i++) {
+          if (i <= review.rating) {
+            starsHtml += '<i class="fas fa-star"></i>';
+          } else {
+            starsHtml += '<i class="far fa-star"></i>';
+          }
+        }
+        
+        // Format date
+        const date = new Date(review.date);
+        const formattedDate = date.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric' 
+        });
+        
+        // Get first letter of name for avatar
+        const firstLetter = review.name.charAt(0).toUpperCase();
+        
+        reviewEl.innerHTML = `
+          <div class="review-header">
+            <div class="reviewer-info">
+              <div class="reviewer-avatar">${firstLetter}</div>
+              <div>
+                <div class="reviewer-name">${review.name}</div>
+                <div class="review-date">${formattedDate}</div>
+              </div>
+            </div>
+            <div class="review-rating">
+              ${starsHtml}
+            </div>
+          </div>
+          <div class="review-product">
+            Reviewed: ${review.product}
+          </div>
+          <h4>${review.title}</h4>
+          <div class="review-text">${review.review}</div>
+          <div class="review-actions">
+            <button class="like-btn ${review.liked ? 'liked' : ''}" onclick="likeReview(${review.id})">
+              <i class="fas fa-thumbs-up"></i> Helpful (${review.likes || 0})
+            </button>
+          </div>
+        `;
+        
+        reviewsGridEl.appendChild(reviewEl);
+      });
+      
+      // Save reviews to localStorage
+      localStorage.setItem('luxewear-reviews', JSON.stringify(reviews));
+    }
+    
+    // Add a new review
+    function addReview(reviewData) {
+      const newReview = {
+        id: Date.now(), // Use timestamp as unique ID
+        name: reviewData.name,
+        email: reviewData.email,
+        product: reviewData.product,
+        rating: parseInt(reviewData.rating),
+        title: reviewData.title,
+        review: reviewData.review,
+        date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
+        likes: 0
+      };
+      
+      reviews.unshift(newReview); // Add to beginning of array
+      updateReviewsDisplay();
+      showNotification('Thank you for your review!');
+    }
+    
+    // Like a review
+    function likeReview(reviewId) {
+      const reviewIndex = reviews.findIndex(r => r.id === reviewId);
+      if (reviewIndex !== -1) {
+        if (!reviews[reviewIndex].likes) {
+          reviews[reviewIndex].likes = 0;
+        }
+        reviews[reviewIndex].likes += 1;
+        updateReviewsDisplay();
+        showNotification('Thank you for your feedback!');
       }
     }
     
@@ -1350,10 +1865,22 @@
       }
     }
     
+    // Toggle review form
+    function toggleReviewForm() {
+      reviewFormContainer.classList.toggle('show');
+      if (reviewFormContainer.classList.contains('show')) {
+        // Scroll to form
+        reviewFormContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+    
     // Event Listeners
     document.addEventListener('DOMContentLoaded', () => {
       // Initial cart display
       updateCartDisplay();
+      
+      // Initial reviews display
+      updateReviewsDisplay();
       
       // Cart button toggle
       cartBtn.addEventListener('click', () => {
@@ -1362,6 +1889,46 @@
       
       // Mobile navigation toggle
       mobileNavBtn.addEventListener('click', toggleMobileNav);
+      
+      // Write review button
+      writeReviewBtn.addEventListener('click', toggleReviewForm);
+      
+      // Cancel review button
+      cancelReviewBtn.addEventListener('click', toggleReviewForm);
+      
+      // Review form submission
+      reviewForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const reviewData = {
+          name: document.getElementById('reviewer-name').value.trim(),
+          email: document.getElementById('reviewer-email').value.trim(),
+          product: document.getElementById('review-product').value,
+          rating: document.querySelector('input[name="rating"]:checked')?.value,
+          title: document.getElementById('review-title').value.trim(),
+          review: document.getElementById('review-text').value.trim()
+        };
+        
+        // Validation
+        if (!reviewData.name || !reviewData.email || !reviewData.product || !reviewData.rating || !reviewData.title || !reviewData.review) {
+          showNotification('Please fill all required fields');
+          return;
+        }
+        
+        if (!reviewData.email.includes('@')) {
+          showNotification('Please enter a valid email address');
+          return;
+        }
+        
+        // Add review
+        addReview(reviewData);
+        
+        // Reset form
+        reviewForm.reset();
+        
+        // Close form
+        toggleReviewForm();
+      });
       
       // Navigation link clicks
       navLinks.forEach(link => {
@@ -1472,6 +2039,7 @@
     // Make functions available globally for onclick handlers
     window.changeQuantity = changeQuantity;
     window.removeFromCart = removeFromCart;
+    window.likeReview = likeReview;
   </script>
 </body>
 </html>
