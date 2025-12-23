@@ -28,6 +28,7 @@
       background-color: var(--dark);
       color: var(--light);
       line-height: 1.6;
+      padding-bottom: 80px; /* Space for cart button */
     }
 
     /* Header */
@@ -101,6 +102,7 @@
       color: var(--light);
       font-size: 1.5rem;
       cursor: pointer;
+      z-index: 102;
     }
 
     .mobile-nav {
@@ -137,7 +139,7 @@
     .hero {
       background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
                   url('https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=1500&q=80') center/cover;
-      height: 80vh;
+      height: 70vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -148,14 +150,14 @@
 
     .hero h2 {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: #fff;
       margin-bottom: 1rem;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     }
 
     .hero p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       max-width: 600px;
       margin-bottom: 2rem;
     }
@@ -180,23 +182,12 @@
       box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
     }
 
-    .btn-outline {
-      background: transparent;
-      border: 2px solid var(--primary);
-      color: var(--primary);
-    }
-
-    .btn-outline:hover {
-      background: var(--primary);
-      color: #000;
-    }
-
-    /* Products Section - MOBILE FRIENDLY 2 PER ROW */
+    /* PRODUCTS SECTION - 2 PER ROW ON ALL SCREENS */
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      padding: 4rem 2rem;
+      grid-template-columns: repeat(2, 1fr); /* Always 2 per row */
+      gap: 1.2rem;
+      padding: 2rem;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -210,30 +201,31 @@
     }
 
     .product:hover {
-      transform: translateY(-10px);
+      transform: translateY(-5px);
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
 
     .product img {
       width: 100%;
-      height: 250px;
+      height: 220px;
       object-fit: cover;
       border-radius: 10px 10px 0 0;
     }
 
     .product-content {
-      padding: 1.5rem;
+      padding: 1.2rem;
     }
 
     .product h3 {
       font-family: 'Playfair Display', serif;
       color: var(--primary);
       margin-bottom: 0.5rem;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
+      min-height: 2.8rem;
     }
 
     .product-price {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       font-weight: 600;
       margin: 0.5rem 0;
       color: var(--light);
@@ -242,18 +234,20 @@
     .product-old-price {
       text-decoration: line-through;
       color: var(--gray);
-      font-size: 1rem;
-      margin-left: 10px;
+      font-size: 0.9rem;
+      margin-left: 8px;
     }
 
     .product-rating {
       color: var(--primary);
       margin: 0.5rem 0;
+      font-size: 0.9rem;
     }
 
     .product-actions {
       display: flex;
-      gap: 10px;
+      flex-direction: column;
+      gap: 0.8rem;
       margin-top: 1rem;
     }
 
@@ -263,16 +257,20 @@
       background: #2a2a2a;
       border-radius: 5px;
       overflow: hidden;
+      justify-content: center;
     }
 
     .quantity-btn {
       background: #333;
       border: none;
       color: var(--light);
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       cursor: pointer;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .quantity-btn:hover {
@@ -286,16 +284,24 @@
       border: none;
       color: var(--light);
       font-weight: bold;
+      font-size: 1rem;
     }
 
-    /* Cart */
+    .add-to-cart {
+      width: 100%;
+      justify-content: center;
+      padding: 0.7rem;
+      font-size: 0.95rem;
+    }
+
+    /* CART BUTTON - MOVED LOWER FOR BETTER NAV ACCESS */
     #cart {
       position: fixed;
-      top: 1rem;
+      top: 5rem; /* Lowered from 1rem to 5rem */
       right: 1rem;
       background: var(--primary);
       color: #000;
-      padding: 0.7rem 1.2rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 30px;
       font-weight: bold;
       cursor: pointer;
@@ -303,30 +309,33 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.5);
       transition: all 0.3s;
+      border: 2px solid #000;
     }
 
     #cart:hover {
       transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(212, 175, 55, 0.5);
     }
 
     #cart-count {
       background: #000;
       color: var(--primary);
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.9rem;
+      font-weight: bold;
     }
 
     #cart-items {
       position: fixed;
       right: 1rem;
-      top: 4.5rem;
+      top: 8.5rem; /* Adjusted to match new cart position */
       background: var(--dark-light);
       color: var(--light);
       padding: 1.5rem;
@@ -369,6 +378,7 @@
     .cart-item-price {
       color: var(--primary);
       font-weight: 600;
+      font-size: 0.95rem;
     }
 
     .cart-item-quantity {
@@ -386,6 +396,9 @@
       border-radius: 50%;
       cursor: pointer;
       font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .cart-item-quantity span {
@@ -507,8 +520,7 @@
     }
 
     .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .form-group textarea {
       width: 100%;
       padding: 0.8rem;
       background: #2a2a2a;
@@ -519,8 +531,7 @@
     }
 
     .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
+    .form-group textarea:focus {
       outline: none;
       border-color: var(--primary);
     }
@@ -573,262 +584,6 @@
       background: #1da851;
     }
 
-    /* CUSTOMER REVIEWS SECTION */
-    .reviews-section {
-      padding: 4rem 2rem;
-      background: var(--dark-light);
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      text-align: center;
-      color: var(--primary);
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--gray);
-      margin-bottom: 3rem;
-    }
-
-    .reviews-container {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .reviews-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-
-    .average-rating {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .rating-number {
-      font-size: 3rem;
-      font-weight: bold;
-      color: var(--primary);
-    }
-
-    .rating-stars {
-      color: var(--primary);
-      font-size: 1.5rem;
-    }
-
-    .rating-count {
-      color: var(--gray);
-      margin-top: 0.5rem;
-    }
-
-    .write-review-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .review-card {
-      background: var(--dark);
-      border-radius: 10px;
-      padding: 1.5rem;
-      border: 1px solid #333;
-    }
-
-    .review-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-    }
-
-    .reviewer-info {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .reviewer-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #000;
-      font-size: 1.2rem;
-    }
-
-    .reviewer-name {
-      font-weight: 600;
-      color: var(--light);
-    }
-
-    .review-date {
-      color: var(--gray);
-      font-size: 0.9rem;
-    }
-
-    .review-rating {
-      color: var(--primary);
-    }
-
-    .review-product {
-      background: rgba(212, 175, 55, 0.1);
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      margin: 1rem 0;
-      display: inline-block;
-      color: var(--primary);
-      font-size: 0.9rem;
-    }
-
-    .review-text {
-      margin: 1rem 0;
-      line-height: 1.6;
-    }
-
-    .review-actions {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .like-btn, .reply-btn {
-      background: transparent;
-      border: 1px solid #444;
-      color: var(--light);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.3s;
-    }
-
-    .like-btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .like-btn.liked {
-      background: var(--primary);
-      color: #000;
-      border-color: var(--primary);
-    }
-
-    .review-form-container {
-      background: var(--dark);
-      border-radius: 10px;
-      padding: 2rem;
-      margin-top: 2rem;
-      border: 1px solid #333;
-      display: none;
-    }
-
-    .review-form-container.show {
-      display: block;
-    }
-
-    .review-form h3 {
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      font-family: 'Playfair Display', serif;
-    }
-
-    .star-rating-input {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-      gap: 5px;
-      margin: 0.5rem 0 1.5rem;
-    }
-
-    .star-rating-input input {
-      display: none;
-    }
-
-    .star-rating-input label {
-      font-size: 2rem;
-      color: #444;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-
-    .star-rating-input input:checked ~ label,
-    .star-rating-input label:hover,
-    .star-rating-input label:hover ~ label {
-      color: var(--primary);
-    }
-
-    .form-row {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-row .form-group {
-      flex: 1;
-      margin-bottom: 0;
-    }
-
-    .review-form-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    .review-form-actions button {
-      padding: 0.8rem 1.5rem;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .cancel-review-btn {
-      background: transparent;
-      border: 1px solid #444;
-      color: var(--light);
-    }
-
-    .submit-review-btn {
-      background: var(--primary);
-      color: #000;
-      border: none;
-    }
-
-    .no-reviews {
-      text-align: center;
-      padding: 3rem;
-      color: var(--gray);
-      grid-column: 1 / -1;
-    }
-
     /* Footer */
     footer {
       background: black;
@@ -836,6 +591,7 @@
       padding: 2rem;
       color: var(--gray);
       font-size: 0.9rem;
+      margin-top: 3rem;
     }
 
     .footer-content {
@@ -883,11 +639,11 @@
       to { transform: translateX(0); opacity: 1; }
     }
 
-    /* RESPONSIVE DESIGN - MOBILE */
+    /* RESPONSIVE DESIGN */
     @media (max-width: 768px) {
       /* Header & Navigation */
       header {
-        padding: 1rem;
+        padding: 0.8rem 1rem;
       }
       
       .desktop-nav {
@@ -908,12 +664,12 @@
       
       /* Hero Section */
       .hero {
-        height: 70vh;
+        height: 60vh;
         padding: 1rem;
       }
       
       .hero h2 {
-        font-size: 2.2rem;
+        font-size: 2rem;
       }
       
       .hero p {
@@ -921,19 +677,15 @@
         padding: 0 1rem;
       }
       
-      /* PRODUCTS - 2 PER ROW ON MOBILE */
+      /* PRODUCTS - ALWAYS 2 PER ROW */
       .products {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
-        padding: 2rem 1rem;
-      }
-      
-      .product {
-        margin-bottom: 0;
+        padding: 1.5rem 1rem;
       }
       
       .product img {
-        height: 200px;
+        height: 180px;
       }
       
       .product-content {
@@ -942,60 +694,25 @@
       
       .product h3 {
         font-size: 1.1rem;
+        min-height: 2.5rem;
       }
       
       .product-price {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
       }
       
-      .product-actions {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      
-      .quantity-selector {
-        justify-content: center;
-      }
-      
-      /* Reviews Section */
-      .reviews-section {
-        padding: 2rem 1rem;
-      }
-      
-      .section-title {
-        font-size: 2rem;
-      }
-      
-      .reviews-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .reviews-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .form-row {
-        flex-direction: column;
-        gap: 0;
-      }
-      
-      .review-form-container {
-        padding: 1.5rem;
-      }
-      
-      /* Cart */
+      /* CART - ADJUSTED FOR MOBILE */
       #cart {
-        top: 0.5rem;
-        right: 0.5rem;
-        padding: 0.5rem 1rem;
+        top: 4.5rem; /* Lowered for mobile */
+        right: 0.8rem;
+        padding: 0.7rem 1.2rem;
         font-size: 0.9rem;
       }
       
       #cart-items {
         width: 95%;
         right: 2.5%;
-        top: 4rem;
+        top: 8rem; /* Adjusted to match cart position */
         padding: 1rem;
       }
       
@@ -1026,31 +743,42 @@
       }
     }
     
-    /* For very small screens (phones under 400px) */
-    @media (max-width: 400px) {
+    /* For larger screens - 3 or 4 per row */
+    @media (min-width: 992px) {
       .products {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr); /* 3 per row on desktop */
+        gap: 1.5rem;
       }
       
-      .hero h2 {
-        font-size: 1.8rem;
+      .product img {
+        height: 250px;
       }
     }
     
-    /* Tablet View */
-    @media (min-width: 769px) and (max-width: 1024px) {
+    @media (min-width: 1200px) {
       .products {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 3rem 1.5rem;
+        grid-template-columns: repeat(4, 1fr); /* 4 per row on large screens */
       }
-      
-      .reviews-grid {
-        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Tablet View */
+    @media (min-width: 769px) and (max-width: 991px) {
+      .products {
+        grid-template-columns: repeat(3, 1fr); /* 3 per row on tablet */
+        padding: 2rem 1.5rem;
       }
       
       .desktop-nav a {
         margin: 0 0.8rem;
         font-size: 0.95rem;
+      }
+      
+      #cart {
+        top: 4.5rem; /* Still lowered for tablet */
+      }
+      
+      #cart-items {
+        top: 8rem;
       }
     }
 
@@ -1072,6 +800,49 @@
       color: var(--primary) !important;
       font-weight: 600 !important;
     }
+    
+    /* About & Contact Sections */
+    .section {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2.2rem;
+    }
+    
+    .about-content, .contact-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .about-image, .contact-info {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .about-image img, .contact-info img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    
+    .contact-details {
+      margin-bottom: 1.5rem;
+    }
+    
+    .contact-details p {
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
   </style>
 </head>
 <body>
@@ -1084,9 +855,8 @@
     
     <!-- Desktop Navigation -->
     <nav class="desktop-nav">
-      <a href="#" class="active-nav" data-section="home">Home</a>
+      <a href="#home" class="active-nav" data-section="home">Home</a>
       <a href="#products" data-section="shop">Shop</a>
-      <a href="#reviews" data-section="reviews">Reviews</a>
       <a href="#about" data-section="about">About</a>
       <a href="#contact" data-section="contact">Contact</a>
     </nav>
@@ -1099,14 +869,11 @@
   
   <!-- Mobile Navigation Menu -->
   <div class="mobile-nav" id="mobile-nav">
-    <a href="#" class="active-nav" data-section="home">
+    <a href="#home" class="active-nav" data-section="home">
       <i class="fas fa-home"></i> Home
     </a>
     <a href="#products" data-section="shop">
       <i class="fas fa-shopping-bag"></i> Shop
-    </a>
-    <a href="#reviews" data-section="reviews">
-      <i class="fas fa-star"></i> Reviews
     </a>
     <a href="#about" data-section="about">
       <i class="fas fa-info-circle"></i> About
@@ -1122,6 +889,7 @@
     <a class="btn" href="#products">Shop Collection <i class="fas fa-arrow-right"></i></a>
   </div>
 
+  <!-- CART BUTTON - MOVED LOWER -->
   <div id="cart">
     <i class="fas fa-shopping-cart"></i>
     Cart (<span id="cart-count">0</span>)
@@ -1146,7 +914,7 @@
 
   <section id="products" class="products">
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Premium Sneakers">
+      <img src="martin double shole.jpeg" alt="Premium Sneakers">
       <div class="product-content">
         <h3>Martin Double Sole</h3>
         <div class="product-rating">
@@ -1155,10 +923,9 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star-half-alt"></i>
-          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(42)</span>
         </div>
         <div class="product-price">Rs 999 <span class="product-old-price">Rs 1499</span></div>
-        <p>Premium leather double sole shoes for maximum comfort and style.</p>
+        <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem;">Premium leather double sole shoes</p>
         <div class="product-actions">
           <div class="quantity-selector">
             <button class="quantity-btn minus" data-id="1">-</button>
@@ -1171,7 +938,7 @@
     </div>
     
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Nike Airforce Shoes">
+      <img src="airforce.jpeg" alt="Nike Airforce Shoes">
       <div class="product-content">
         <h3>Airforce 1</h3>
         <div class="product-rating">
@@ -1180,10 +947,9 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
-          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(56)</span>
         </div>
         <div class="product-price">Rs 1499 <span class="product-old-price">Rs 1999</span></div>
-        <p>Classic white Nike Airforce 1 sneakers, timeless design and comfort.</p>
+        <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem;">Classic white Nike Airforce 1 sneakers</p>
         <div class="product-actions">
           <div class="quantity-selector">
             <button class="quantity-btn minus" data-id="2">-</button>
@@ -1196,7 +962,7 @@
     </div>
     
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1398&q=80" alt="Casual Shoes">
+      <img src="playboy.jpeg" alt="Casual Shoes">
       <div class="product-content">
         <h3>Playboy Casual</h3>
         <div class="product-rating">
@@ -1205,10 +971,9 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="far fa-star"></i>
-          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(38)</span>
         </div>
         <div class="product-price">Rs 799 <span class="product-old-price">Rs 1199</span></div>
-        <p>Stylish casual shoes perfect for everyday wear with premium comfort.</p>
+        <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem;">Stylish casual shoes for everyday wear</p>
         <div class="product-actions">
           <div class="quantity-selector">
             <button class="quantity-btn minus" data-id="3">-</button>
@@ -1221,7 +986,7 @@
     </div>
     
     <div class="product">
-      <img src="https://images.unsplash.com/photo-1529810313688-44ea1c2d62d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1390&q=80" alt="Chelsea Boots">
+      <img src="chelsea.jpeg" alt="Chelsea Boots">
       <div class="product-content">
         <h3>Chelsea Boot</h3>
         <div class="product-rating">
@@ -1230,10 +995,9 @@
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
           <i class="fas fa-star-half-alt"></i>
-          <span style="margin-left: 5px; color: var(--gray); font-size: 0.9rem;">(29)</span>
         </div>
         <div class="product-price">Rs 1200 <span class="product-old-price">Rs 1699</span></div>
-        <p>Elegant Chelsea boots made with genuine leather, perfect for formal occasions.</p>
+        <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem;">Elegant Chelsea boots, genuine leather</p>
         <div class="product-actions">
           <div class="quantity-selector">
             <button class="quantity-btn minus" data-id="4">-</button>
@@ -1244,108 +1008,65 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- CUSTOMER REVIEWS SECTION -->
-  <section id="reviews" class="reviews-section">
-    <div class="reviews-container">
-      <h2 class="section-title">Customer Reviews</h2>
-      <p class="section-subtitle">See what our customers are saying about our products</p>
-      
-      <div class="reviews-header">
-        <div class="average-rating">
-          <div class="rating-number" id="average-rating">4.5</div>
-          <div>
-            <div class="rating-stars">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star-half-alt"></i>
-            </div>
-            <div class="rating-count" id="total-reviews">Based on 125 reviews</div>
-          </div>
+    
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1560343090-f0409e92791a?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Running Shoes">
+      <div class="product-content">
+        <h3>Running Pro</h3>
+        <div class="product-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="far fa-star"></i>
         </div>
-        
-        <button class="write-review-btn" id="write-review-btn">
-          <i class="fas fa-edit"></i> Write a Review
-        </button>
+        <div class="product-price">Rs 899 <span class="product-old-price">Rs 1299</span></div>
+        <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem;">Lightweight running shoes for athletes</p>
+        <div class="product-actions">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" data-id="5">-</button>
+            <input type="text" class="quantity-input" value="1" data-id="5" readonly>
+            <button class="quantity-btn plus" data-id="5">+</button>
+          </div>
+          <button class="btn add-to-cart" data-id="5" data-name="Running Pro" data-price="899">Add to Cart</button>
+        </div>
       </div>
-      
-      <div class="reviews-grid" id="reviews-grid">
-        <!-- Reviews will be loaded here dynamically -->
-      </div>
-      
-      <div class="review-form-container" id="review-form-container">
-        <form class="review-form" id="review-form">
-          <h3>Write Your Review</h3>
-          
-          <div class="form-group">
-            <label>Select Product</label>
-            <select id="review-product" required>
-              <option value="">Select a product...</option>
-              <option value="Martin Double Sole">Martin Double Sole</option>
-              <option value="Airforce 1">Airforce 1</option>
-              <option value="Playboy Casual">Playboy Casual</option>
-              <option value="Chelsea Boot">Chelsea Boot</option>
-            </select>
+    </div>
+    
+    <div class="product">
+      <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Basketball Shoes">
+      <div class="product-content">
+        <h3>Basketball Elite</h3>
+        <div class="product-rating">
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+          <i class="far fa-star"></i>
+        </div>
+        <div class="product-price">Rs 1599 <span class="product-old-price">Rs 2199</span></div>
+        <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 0.5rem;">High-performance basketball shoes</p>
+        <div class="product-actions">
+          <div class="quantity-selector">
+            <button class="quantity-btn minus" data-id="6">-</button>
+            <input type="text" class="quantity-input" value="1" data-id="6" readonly>
+            <button class="quantity-btn plus" data-id="6">+</button>
           </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label>Your Name</label>
-              <input type="text" id="reviewer-name" required placeholder="Enter your name">
-            </div>
-            <div class="form-group">
-              <label>Your Email</label>
-              <input type="email" id="reviewer-email" required placeholder="Enter your email">
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label>Rating</label>
-            <div class="star-rating-input">
-              <input type="radio" id="star5" name="rating" value="5">
-              <label for="star5"><i class="fas fa-star"></i></label>
-              <input type="radio" id="star4" name="rating" value="4">
-              <label for="star4"><i class="fas fa-star"></i></label>
-              <input type="radio" id="star3" name="rating" value="3">
-              <label for="star3"><i class="fas fa-star"></i></label>
-              <input type="radio" id="star2" name="rating" value="2">
-              <label for="star2"><i class="fas fa-star"></i></label>
-              <input type="radio" id="star1" name="rating" value="1">
-              <label for="star1"><i class="fas fa-star"></i></label>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label>Review Title</label>
-            <input type="text" id="review-title" required placeholder="Summarize your experience">
-          </div>
-          
-          <div class="form-group">
-            <label>Your Review</label>
-            <textarea id="review-text" rows="4" required placeholder="Share your experience with this product..."></textarea>
-          </div>
-          
-          <div class="review-form-actions">
-            <button type="button" class="cancel-review-btn" id="cancel-review-btn">Cancel</button>
-            <button type="submit" class="submit-review-btn">Submit Review</button>
-          </div>
-        </form>
+          <button class="btn add-to-cart" data-id="6" data-name="Basketball Elite" data-price="1599">Add to Cart</button>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- About Section -->
-  <section id="about" style="padding: 4rem 2rem; max-width: 1200px; margin: 0 auto;">
-    <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); text-align: center; margin-bottom: 2rem; font-size: 2.5rem;">About LuxeWear</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;">
-      <div style="flex: 1; min-width: 300px;">
-        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="About LuxeWear" style="width: 100%; border-radius: 10px;">
+  <section id="about" class="section">
+    <h2>About LuxeWear</h2>
+    <div class="about-content">
+      <div class="about-image">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="About LuxeWear">
       </div>
-      <div style="flex: 1; min-width: 300px;">
-        <h3 style="color: var(--light); margin-bottom: 1rem;">Our Story</h3>
+      <div class="about-text">
+        <h3 style="color: var(--light); margin-bottom: 1rem; font-size: 1.5rem;">Our Story</h3>
         <p style="margin-bottom: 1rem;">LuxeWear was founded with a simple mission: to provide premium footwear that combines luxury, comfort, and style. We believe that everyone deserves to walk in shoes that make them feel confident and elegant.</p>
         <p>Our collection is carefully curated from the finest materials, ensuring durability and exceptional quality. Each pair is designed to elevate your everyday style while providing all-day comfort.</p>
       </div>
@@ -1353,32 +1074,30 @@
   </section>
 
   <!-- Contact Section -->
-  <section id="contact" style="padding: 4rem 2rem; background: var(--dark-light);">
-    <div style="max-width: 1200px; margin: 0 auto;">
-      <h2 style="font-family: 'Playfair Display', serif; color: var(--primary); text-align: center; margin-bottom: 2rem; font-size: 2.5rem;">Contact Us</h2>
-      <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
-        <div style="flex: 1; min-width: 300px;">
-          <h3 style="color: var(--light); margin-bottom: 1rem;">Get in Touch</h3>
-          <div style="margin-bottom: 1.5rem;">
-            <p><i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 10px;"></i> Kathmandu, Nepal</p>
-            <p><i class="fas fa-phone" style="color: var(--primary); margin-right: 10px;"></i> +977 9827716886</p>
-            <p><i class="fas fa-envelope" style="color: var(--primary); margin-right: 10px;"></i> info@luxewear.com</p>
-          </div>
-          <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
-          </div>
+  <section id="contact" class="section" style="background: var(--dark-light);">
+    <h2>Contact Us</h2>
+    <div class="contact-content">
+      <div class="contact-info">
+        <h3 style="color: var(--light); margin-bottom: 1rem; font-size: 1.5rem;">Get in Touch</h3>
+        <div class="contact-details">
+          <p><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> Itahari, Nepal</p>
+          <p><i class="fas fa-phone" style="color: var(--primary);"></i> +977 9827716886</p>
+          <p><i class="fas fa-envelope" style="color: var(--primary);"></i> info@luxewear.com</p>
         </div>
-        <div style="flex: 1; min-width: 300px;">
-          <form id="contact-form" style="display: flex; flex-direction: column; gap: 1rem;">
-            <input type="text" placeholder="Your Name" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);">
-            <input type="email" placeholder="Your Email" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);">
-            <textarea placeholder="Your Message" rows="4" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);"></textarea>
-            <button type="submit" class="btn" style="align-self: flex-start;">Send Message</button>
-          </form>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
         </div>
+      </div>
+      <div class="contact-form">
+        <form style="display: flex; flex-direction: column; gap: 1rem;">
+          <input type="text" placeholder="Your Name" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);">
+          <input type="email" placeholder="Your Email" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);">
+          <textarea placeholder="Your Message" rows="4" style="padding: 0.8rem; background: #2a2a2a; border: 1px solid #444; border-radius: 5px; color: var(--light);"></textarea>
+          <button type="submit" class="btn" style="align-self: flex-start;">Send Message</button>
+        </form>
       </div>
     </div>
   </section>
@@ -1454,54 +1173,6 @@
     let cart = JSON.parse(localStorage.getItem('luxewear-cart')) || [];
     const YOUR_PHONE_NUMBER = "+9779827716886"; // Your WhatsApp number
     
-    // Initialize reviews from localStorage or default reviews
-    let reviews = JSON.parse(localStorage.getItem('luxewear-reviews')) || [
-      {
-        id: 1,
-        name: "Alex Johnson",
-        email: "alex@example.com",
-        product: "Martin Double Sole",
-        rating: 5,
-        title: "Excellent Quality!",
-        review: "These shoes are absolutely fantastic! The leather quality is top-notch and they're incredibly comfortable right out of the box. Worth every penny!",
-        date: "2025-01-15",
-        likes: 12
-      },
-      {
-        id: 2,
-        name: "Sarah Miller",
-        email: "sarah@example.com",
-        product: "Airforce 1",
-        rating: 5,
-        title: "Best sneakers ever",
-        review: "I've owned multiple pairs of Airforce 1s over the years, but these are by far the best quality I've seen. Perfect fit and amazing comfort.",
-        date: "2025-01-10",
-        likes: 8
-      },
-      {
-        id: 3,
-        name: "David Wilson",
-        email: "david@example.com",
-        product: "Chelsea Boot",
-        rating: 4,
-        title: "Great for formal occasions",
-        review: "Wore these to a wedding and received multiple compliments. The leather is soft and they broke in nicely after a couple of wears.",
-        date: "2025-01-05",
-        likes: 5
-      },
-      {
-        id: 4,
-        name: "Emma Thompson",
-        email: "emma@example.com",
-        product: "Playboy Casual",
-        rating: 4,
-        title: "Perfect everyday shoes",
-        review: "These have become my go-to shoes for daily wear. They're comfortable, stylish, and hold up well even with regular use.",
-        date: "2024-12-28",
-        likes: 7
-      }
-    ];
-    
     // DOM Elements
     const cartCountEl = document.getElementById('cart-count');
     const cartTotalEl = document.getElementById('cart-total');
@@ -1520,15 +1191,6 @@
     const mobileNavBtn = document.getElementById('mobile-nav-btn');
     const mobileNav = document.getElementById('mobile-nav');
     const navLinks = document.querySelectorAll('nav a, .mobile-nav a');
-    
-    // Review DOM Elements
-    const reviewsGridEl = document.getElementById('reviews-grid');
-    const averageRatingEl = document.getElementById('average-rating');
-    const totalReviewsEl = document.getElementById('total-reviews');
-    const writeReviewBtn = document.getElementById('write-review-btn');
-    const reviewFormContainer = document.getElementById('review-form-container');
-    const reviewForm = document.getElementById('review-form');
-    const cancelReviewBtn = document.getElementById('cancel-review-btn');
     
     // Update cart display
     function updateCartDisplay() {
@@ -1568,126 +1230,6 @@
           `;
           cartListEl.appendChild(li);
         });
-      }
-    }
-    
-    // Update reviews display
-    function updateReviewsDisplay() {
-      // Calculate average rating
-      if (reviews.length === 0) {
-        averageRatingEl.textContent = "0.0";
-        totalReviewsEl.textContent = "No reviews yet";
-      } else {
-        const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-        const averageRating = totalRating / reviews.length;
-        averageRatingEl.textContent = averageRating.toFixed(1);
-        totalReviewsEl.textContent = `Based on ${reviews.length} reviews`;
-      }
-      
-      // Clear reviews grid
-      reviewsGridEl.innerHTML = '';
-      
-      // Show message if no reviews
-      if (reviews.length === 0) {
-        const noReviewsEl = document.createElement('div');
-        noReviewsEl.className = 'no-reviews';
-        noReviewsEl.innerHTML = `
-          <i class="fas fa-comment-alt" style="font-size: 3rem; margin-bottom: 1rem; color: var(--gray);"></i>
-          <h3>No reviews yet</h3>
-          <p>Be the first to share your experience!</p>
-        `;
-        reviewsGridEl.appendChild(noReviewsEl);
-        return;
-      }
-      
-      // Display reviews
-      reviews.forEach(review => {
-        const reviewEl = document.createElement('div');
-        reviewEl.className = 'review-card';
-        reviewEl.dataset.id = review.id;
-        
-        // Generate star rating
-        let starsHtml = '';
-        for (let i = 1; i <= 5; i++) {
-          if (i <= review.rating) {
-            starsHtml += '<i class="fas fa-star"></i>';
-          } else {
-            starsHtml += '<i class="far fa-star"></i>';
-          }
-        }
-        
-        // Format date
-        const date = new Date(review.date);
-        const formattedDate = date.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'short', 
-          day: 'numeric' 
-        });
-        
-        // Get first letter of name for avatar
-        const firstLetter = review.name.charAt(0).toUpperCase();
-        
-        reviewEl.innerHTML = `
-          <div class="review-header">
-            <div class="reviewer-info">
-              <div class="reviewer-avatar">${firstLetter}</div>
-              <div>
-                <div class="reviewer-name">${review.name}</div>
-                <div class="review-date">${formattedDate}</div>
-              </div>
-            </div>
-            <div class="review-rating">
-              ${starsHtml}
-            </div>
-          </div>
-          <div class="review-product">
-            Reviewed: ${review.product}
-          </div>
-          <h4>${review.title}</h4>
-          <div class="review-text">${review.review}</div>
-          <div class="review-actions">
-            <button class="like-btn ${review.liked ? 'liked' : ''}" onclick="likeReview(${review.id})">
-              <i class="fas fa-thumbs-up"></i> Helpful (${review.likes || 0})
-            </button>
-          </div>
-        `;
-        
-        reviewsGridEl.appendChild(reviewEl);
-      });
-      
-      // Save reviews to localStorage
-      localStorage.setItem('luxewear-reviews', JSON.stringify(reviews));
-    }
-    
-    // Add a new review
-    function addReview(reviewData) {
-      const newReview = {
-        id: Date.now(), // Use timestamp as unique ID
-        name: reviewData.name,
-        email: reviewData.email,
-        product: reviewData.product,
-        rating: parseInt(reviewData.rating),
-        title: reviewData.title,
-        review: reviewData.review,
-        date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
-        likes: 0
-      };
-      
-      reviews.unshift(newReview); // Add to beginning of array
-      updateReviewsDisplay();
-      showNotification('Thank you for your review!');
-    }
-    
-    // Like a review
-    function likeReview(reviewId) {
-      const reviewIndex = reviews.findIndex(r => r.id === reviewId);
-      if (reviewIndex !== -1) {
-        if (!reviews[reviewIndex].likes) {
-          reviews[reviewIndex].likes = 0;
-        }
-        reviews[reviewIndex].likes += 1;
-        updateReviewsDisplay();
-        showNotification('Thank you for your feedback!');
       }
     }
     
@@ -1865,12 +1407,10 @@
       }
     }
     
-    // Toggle review form
-    function toggleReviewForm() {
-      reviewFormContainer.classList.toggle('show');
-      if (reviewFormContainer.classList.contains('show')) {
-        // Scroll to form
-        reviewFormContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Close cart when clicking outside
+    function closeCartOnOutsideClick(e) {
+      if (!cartItemsEl.contains(e.target) && !cartBtn.contains(e.target)) {
+        cartItemsEl.style.display = 'none';
       }
     }
     
@@ -1879,9 +1419,6 @@
       // Initial cart display
       updateCartDisplay();
       
-      // Initial reviews display
-      updateReviewsDisplay();
-      
       // Cart button toggle
       cartBtn.addEventListener('click', () => {
         cartItemsEl.style.display = cartItemsEl.style.display === 'block' ? 'none' : 'block';
@@ -1889,46 +1426,6 @@
       
       // Mobile navigation toggle
       mobileNavBtn.addEventListener('click', toggleMobileNav);
-      
-      // Write review button
-      writeReviewBtn.addEventListener('click', toggleReviewForm);
-      
-      // Cancel review button
-      cancelReviewBtn.addEventListener('click', toggleReviewForm);
-      
-      // Review form submission
-      reviewForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const reviewData = {
-          name: document.getElementById('reviewer-name').value.trim(),
-          email: document.getElementById('reviewer-email').value.trim(),
-          product: document.getElementById('review-product').value,
-          rating: document.querySelector('input[name="rating"]:checked')?.value,
-          title: document.getElementById('review-title').value.trim(),
-          review: document.getElementById('review-text').value.trim()
-        };
-        
-        // Validation
-        if (!reviewData.name || !reviewData.email || !reviewData.product || !reviewData.rating || !reviewData.title || !reviewData.review) {
-          showNotification('Please fill all required fields');
-          return;
-        }
-        
-        if (!reviewData.email.includes('@')) {
-          showNotification('Please enter a valid email address');
-          return;
-        }
-        
-        // Add review
-        addReview(reviewData);
-        
-        // Reset form
-        reviewForm.reset();
-        
-        // Close form
-        toggleReviewForm();
-      });
       
       // Navigation link clicks
       navLinks.forEach(link => {
@@ -2022,11 +1519,7 @@
       });
       
       // Close cart dropdown when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!cartItemsEl.contains(e.target) && !cartBtn.contains(e.target)) {
-          cartItemsEl.style.display = 'none';
-        }
-      });
+      document.addEventListener('click', closeCartOnOutsideClick);
       
       // Close mobile nav when clicking outside
       document.addEventListener('click', (e) => {
@@ -2039,7 +1532,6 @@
     // Make functions available globally for onclick handlers
     window.changeQuantity = changeQuantity;
     window.removeFromCart = removeFromCart;
-    window.likeReview = likeReview;
   </script>
 </body>
 </html>
