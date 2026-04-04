@@ -2,411 +2,484 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>LuxeWear Admin</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
     :root {
-      --gold: #d4af37;
-      --gold-dark: #b9952e;
-      --bg: #0a0a0f;
-      --surface: #111118;
-      --surface2: #1a1a24;
-      --surface3: #22222e;
-      --border: #2a2a38;
-      --text: #e8e8f0;
-      --text-muted: #6b6b80;
-      --success: #22c55e;
-      --error: #ef4444;
-      --warning: #f59e0b;
+      --gold: #c9a84c;
+      --gold-light: #e8c96e;
+      --gold-dim: rgba(201,168,76,0.12);
+      --bg: #080808;
+      --s1: #0f0f0f;
+      --s2: #161616;
+      --s3: #1e1e1e;
+      --s4: #262626;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0ede8;
+      --muted: #777;
+      --success: #3ecf8e;
+      --error: #ff5b5b;
+      --warn: #f59e0b;
       --info: #3b82f6;
+      --r: 10px;
+      --sidebar: 230px;
+      --touch: 46px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; overflow-x: hidden;
     }
 
-    /* ── Login Screen ────────────────────────────────── */
+    /* ── LOGIN ─────────────────────────────────────── */
     #login-screen {
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 70%);
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 60%);
+      padding: 1rem;
     }
     .login-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 3rem 2.5rem;
-      width: 100%; max-width: 420px;
-      text-align: center;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      background: var(--s1); border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 16px; padding: clamp(1.5rem, 5vw, 2.5rem);
+      width: 100%; max-width: 400px; text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
     }
     .login-logo {
-      font-family: 'Playfair Display', serif;
-      color: var(--gold); font-size: 2rem;
-      margin-bottom: 0.3rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; color: var(--gold);
       display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-bottom: 0.3rem;
     }
-    .login-subtitle { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem; }
-    .login-form { display: flex; flex-direction: column; gap: 1rem; }
+    .login-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+    .login-form { display: flex; flex-direction: column; gap: 0.9rem; }
     .login-form input {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.85rem 1rem;
-      color: var(--text); font-size: 1rem;
+      background: var(--s2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.8rem 1rem;
+      color: var(--text); font-size: 0.95rem;
+      min-height: var(--touch); font-family: inherit;
       transition: border-color 0.2s;
     }
     .login-form input:focus { outline: none; border-color: var(--gold); }
     .login-btn {
       background: var(--gold); color: #000;
-      border: none; padding: 0.9rem;
-      border-radius: 8px; font-weight: 700;
-      font-size: 1rem; cursor: pointer;
-      transition: all 0.2s;
+      border: none; padding: 0.9rem; border-radius: 10px;
+      font-weight: 700; font-size: 0.95rem; cursor: pointer;
+      min-height: var(--touch); transition: all 0.2s;
     }
-    .login-btn:hover { background: var(--gold-dark); }
-    .login-err { color: var(--error); font-size: 0.85rem; min-height: 1.2rem; }
+    .login-btn:hover { background: var(--gold-light); }
+    .login-err { color: var(--error); font-size: 0.82rem; min-height: 1.2rem; }
 
-    /* ── App Layout ──────────────────────────────────── */
-    #app { display: none; min-height: 100vh; }
+    /* ── APP ───────────────────────────────────────── */
+    #app { display: none; }
 
     /* Sidebar */
     .sidebar {
       position: fixed; top: 0; left: 0;
-      width: 240px; height: 100vh;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      z-index: 50; overflow-y: auto;
+      width: var(--sidebar); height: 100vh;
+      background: var(--s1); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; z-index: 100;
+      overflow-y: auto;
+      transition: transform 0.3s cubic-bezier(.4,0,.2,1);
     }
-    .sidebar-logo {
-      padding: 1.5rem;
+    .sidebar-head {
+      padding: 1.3rem 1.2rem;
       border-bottom: 1px solid var(--border);
-      font-family: 'Playfair Display', serif;
-      color: var(--gold); font-size: 1.4rem;
       display: flex; align-items: center; gap: 10px;
     }
-    .sidebar-nav { flex: 1; padding: 1rem 0; }
+    .sidebar-head span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--gold);
+    }
+    .sidebar-head i { color: var(--gold); }
+    .close-sidebar-btn {
+      display: none; background: none; border: none;
+      color: var(--muted); cursor: pointer; margin-left: auto;
+      font-size: 1.1rem; padding: 4px;
+    }
+
+    .sidebar-nav { flex: 1; padding: 0.8rem 0; }
     .nav-item {
       display: flex; align-items: center; gap: 12px;
-      padding: 0.85rem 1.5rem;
-      color: var(--text-muted); cursor: pointer;
-      transition: all 0.2s; font-size: 0.95rem;
+      padding: 0.8rem 1.2rem;
+      color: var(--muted); cursor: pointer;
+      font-size: 0.9rem; font-weight: 500;
       border-left: 3px solid transparent;
-      user-select: none;
+      transition: all 0.2s; user-select: none;
+      min-height: var(--touch);
     }
-    .nav-item:hover { color: var(--text); background: var(--surface2); }
-    .nav-item.active { color: var(--gold); background: rgba(212,175,55,0.08); border-left-color: var(--gold); }
-    .nav-item i { width: 20px; text-align: center; }
-    .sidebar-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid var(--border);
+    .nav-item:hover { color: var(--text); background: var(--s2); }
+    .nav-item.active { color: var(--gold); background: var(--gold-dim); border-left-color: var(--gold); }
+    .nav-item i { width: 18px; text-align: center; font-size: 0.95rem; }
+    .nav-badge {
+      margin-left: auto; background: var(--error);
+      color: #fff; font-size: 0.7rem; font-weight: 700;
+      min-width: 20px; height: 20px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 5px;
     }
+
+    .sidebar-footer { padding: 0.8rem 1.2rem; border-top: 1px solid var(--border); }
     .logout-btn {
       display: flex; align-items: center; gap: 10px;
-      color: var(--error); cursor: pointer; font-size: 0.9rem;
-      background: none; border: none; padding: 0.5rem;
-      transition: opacity 0.2s;
+      color: var(--error); background: none; border: none;
+      cursor: pointer; font-size: 0.88rem; padding: 0.6rem;
+      border-radius: 8px; transition: background 0.2s; width: 100%;
     }
-    .logout-btn:hover { opacity: 0.8; }
+    .logout-btn:hover { background: rgba(255,91,91,0.08); }
 
     /* Main */
     .main {
-      margin-left: 240px;
+      margin-left: var(--sidebar);
       min-height: 100vh;
-      padding: 2rem;
+      padding: clamp(1rem, 3vw, 2rem);
     }
 
-    /* Top Bar */
+    /* Top bar */
     .topbar {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem; gap: 1rem;
     }
-    .page-title { font-size: 1.6rem; font-weight: 700; }
-    .page-title span { color: var(--gold); }
-    .topbar-actions { display: flex; gap: 0.8rem; align-items: center; }
-    .realtime-badge {
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; }
+    .page-title .gold { color: var(--gold); }
+    .live-badge {
       display: flex; align-items: center; gap: 6px;
-      font-size: 0.8rem; color: var(--success);
-      background: rgba(34,197,94,0.1); padding: 4px 12px;
-      border-radius: 20px;
+      font-size: 0.78rem; color: var(--success);
+      background: rgba(62,207,142,0.1); padding: 4px 12px;
+      border-radius: 20px; white-space: nowrap;
     }
-    .realtime-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    .live-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+    /* Hamburger for mobile */
+    .sidebar-toggle {
+      display: none; background: none; border: none;
+      color: var(--text); font-size: 1.2rem; cursor: pointer;
+      width: var(--touch); height: var(--touch);
+      align-items: center; justify-content: center;
+      border-radius: 8px; transition: background 0.2s;
+    }
+    .sidebar-toggle:hover { background: var(--s2); }
 
     /* Panels */
     .panel { display: none; }
-    .panel.active { display: block; }
+    .panel.active { display: block; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
     /* Stats */
     .stats-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1.2rem; margin-bottom: 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; margin-bottom: 1.5rem;
     }
     .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.5rem;
+      background: var(--s1); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.3rem;
     }
-    .stat-label { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
-    .stat-value { font-size: 2rem; font-weight: 700; color: var(--gold); }
-    .stat-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.3rem; }
+    .stat-icon { font-size: 1.3rem; color: var(--gold); margin-bottom: 0.6rem; }
+    .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
 
-    /* Cards */
+    /* Card */
     .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;
+      background: var(--s1); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.3rem; margin-bottom: 1.3rem;
     }
-    .card-header {
+    .card-hd {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;
     }
-    .card-title { font-size: 1.1rem; font-weight: 600; }
+    .card-title { font-size: 1rem; font-weight: 600; }
 
     /* Buttons */
     .btn-gold {
-      background: var(--gold); color: #000;
-      border: none; padding: 0.65rem 1.3rem;
-      border-radius: 8px; cursor: pointer;
-      font-weight: 600; font-size: 0.9rem;
+      background: var(--gold); color: #000; border: none;
+      padding: 0.6rem 1.2rem; border-radius: 8px;
+      font-weight: 700; font-size: 0.85rem; cursor: pointer;
       display: inline-flex; align-items: center; gap: 6px;
-      transition: all 0.2s;
+      transition: all 0.2s; min-height: 38px; white-space: nowrap;
     }
-    .btn-gold:hover { background: var(--gold-dark); }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-gold:disabled { background: var(--s4); color: var(--muted); cursor: not-allowed; }
     .btn-ghost {
-      background: transparent; color: var(--text-muted);
-      border: 1px solid var(--border); padding: 0.65rem 1.3rem;
-      border-radius: 8px; cursor: pointer;
-      font-size: 0.9rem; transition: all 0.2s;
+      background: transparent; border: 1px solid var(--border);
+      color: var(--muted); padding: 0.6rem 1.2rem;
+      border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+      transition: all 0.2s; min-height: 38px;
     }
-    .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }
-    .btn-danger {
+    .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+    .btn-del {
       background: transparent; color: var(--error);
-      border: 1px solid var(--error); padding: 0.5rem 0.9rem;
-      border-radius: 6px; cursor: pointer; font-size: 0.82rem;
+      border: 1px solid var(--error); padding: 0.4rem 0.8rem;
+      border-radius: 6px; cursor: pointer; font-size: 0.8rem;
       transition: all 0.2s;
     }
-    .btn-danger:hover { background: var(--error); color: #fff; }
+    .btn-del:hover { background: var(--error); color: #fff; }
     .btn-sm {
-      background: var(--surface3); color: var(--text-muted);
-      border: 1px solid var(--border); padding: 0.4rem 0.8rem;
-      border-radius: 6px; cursor: pointer; font-size: 0.82rem;
+      background: var(--s3); border: 1px solid var(--border);
+      color: var(--muted); padding: 0.4rem 0.8rem;
+      border-radius: 6px; cursor: pointer; font-size: 0.8rem;
       transition: all 0.2s;
     }
-    .btn-sm:hover { color: var(--text); border-color: var(--text-muted); }
+    .btn-sm:hover { color: var(--text); border-color: var(--muted); }
 
-    /* Form elements */
+    /* Form */
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
     .form-group.full { grid-column: 1 / -1; }
-    .form-group label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+    .form-group label { font-size: 0.78rem; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase; }
     .form-group input,
     .form-group select,
     .form-group textarea {
-      background: var(--surface2); border: 1px solid var(--border);
+      background: var(--s2); border: 1px solid var(--border);
       border-radius: 8px; padding: 0.7rem 0.9rem;
-      color: var(--text); font-size: 0.95rem;
+      color: var(--text); font-size: 0.9rem;
       transition: border-color 0.2s; font-family: inherit;
+      min-height: 40px;
     }
+    .form-group textarea { min-height: 80px; resize: vertical; }
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus { outline: none; border-color: var(--gold); }
-    .form-group select option { background: var(--surface2); }
-    .form-actions { display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1rem; }
+    .form-group select option { background: var(--s2); }
+    .form-actions { display: flex; gap: 0.7rem; justify-content: flex-end; margin-top: 1rem; flex-wrap: wrap; }
 
     /* Image upload */
-    .img-tabs { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .img-tabs { display: flex; gap: 0.4rem; margin-bottom: 0.7rem; }
     .img-tab {
-      background: var(--surface3); border: 1px solid var(--border);
-      color: var(--text-muted); padding: 0.4rem 0.9rem;
-      border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+      background: var(--s3); border: 1px solid var(--border);
+      color: var(--muted); padding: 0.35rem 0.9rem;
+      border-radius: 6px; cursor: pointer; font-size: 0.82rem;
     }
-    .img-tab.active { background: var(--gold); color: #000; border-color: var(--gold); }
+    .img-tab.active { background: var(--gold); color: #000; border-color: var(--gold); font-weight: 700; }
     .img-panel { display: none; }
     .img-panel.active { display: block; }
     .upload-zone {
       border: 2px dashed var(--border); border-radius: 8px;
-      padding: 2rem; text-align: center; cursor: pointer;
-      transition: border-color 0.2s; color: var(--text-muted);
-      position: relative;
+      padding: 1.5rem; text-align: center;
+      cursor: pointer; color: var(--muted); position: relative;
+      transition: border-color 0.2s;
     }
     .upload-zone:hover { border-color: var(--gold); color: var(--text); }
     .upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
-    .upload-zone i { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
-    #upload-preview { margin-top: 0.8rem; max-height: 120px; border-radius: 8px; display: none; }
+    .upload-zone i { font-size: 1.8rem; margin-bottom: 0.4rem; display: block; }
+    .upload-preview { margin-top: 0.7rem; max-height: 100px; border-radius: 8px; display: none; }
+    .upload-status { font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
 
     /* Table */
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.87rem; min-width: 500px; }
     thead th {
-      text-align: left; padding: 0.8rem 1rem;
-      color: var(--text-muted); font-weight: 500; font-size: 0.8rem;
+      text-align: left; padding: 0.7rem 0.9rem;
+      color: var(--muted); font-weight: 500; font-size: 0.75rem;
       text-transform: uppercase; letter-spacing: 0.5px;
       border-bottom: 1px solid var(--border);
     }
     tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
-    tbody tr:hover { background: var(--surface2); }
-    tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
+    tbody tr:hover { background: var(--s2); }
+    tbody td { padding: 0.8rem 0.9rem; vertical-align: middle; }
     .product-thumb {
-      width: 48px; height: 48px; object-fit: cover;
+      width: 44px; height: 44px; object-fit: cover;
       border-radius: 8px; border: 1px solid var(--border);
     }
-    .td-actions { display: flex; gap: 0.5rem; }
+    .td-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
     /* Badges */
     .badge {
-      display: inline-flex; padding: 3px 10px;
-      border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+      display: inline-flex; padding: 3px 9px;
+      border-radius: 20px; font-size: 0.72rem; font-weight: 700;
     }
     .badge-pending  { background: rgba(245,158,11,0.15); color: #f59e0b; }
     .badge-confirmed{ background: rgba(59,130,246,0.15); color: #3b82f6; }
     .badge-processing{ background: rgba(168,85,247,0.15); color: #a855f7; }
-    .badge-delivered{ background: rgba(34,197,94,0.15); color: #22c55e; }
-    .badge-cancelled{ background: rgba(239,68,68,0.15); color: #ef4444; }
-    .badge-active   { background: rgba(34,197,94,0.15); color: #22c55e; }
-    .badge-inactive { background: rgba(107,114,128,0.2); color: #6b7280; }
-    .badge-percent  { background: rgba(59,130,246,0.15); color: #3b82f6; }
-    .badge-fixed    { background: rgba(168,85,247,0.15); color: #a855f7; }
+    .badge-delivered{ background: rgba(62,207,142,0.15); color: #3ecf8e; }
+    .badge-cancelled{ background: rgba(255,91,91,0.15); color: #ff5b5b; }
+    .badge-active   { background: rgba(62,207,142,0.15); color: #3ecf8e; }
+    .badge-inactive { background: rgba(120,120,120,0.15); color: #888; }
+    .badge-cat      { background: rgba(201,168,76,0.12); color: var(--gold); }
 
-    /* Status select */
     .status-select {
-      background: var(--surface2); border: 1px solid var(--border);
+      background: var(--s2); border: 1px solid var(--border);
       border-radius: 6px; color: var(--text); padding: 0.3rem 0.5rem;
-      font-size: 0.82rem; cursor: pointer;
+      font-size: 0.8rem; cursor: pointer; font-family: inherit;
     }
 
-    /* Order detail expand */
-    .order-items-detail { font-size: 0.82rem; color: var(--text-muted); }
-    .order-items-detail div { margin-bottom: 2px; }
-
-    /* Search & filter bar */
-    .filter-bar { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; align-items: center; flex-wrap: wrap; }
-    .search-input {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: 8px; padding: 0.6rem 1rem;
-      color: var(--text); font-size: 0.9rem; flex: 1; min-width: 200px;
+    /* Filter bar */
+    .filter-bar { display: flex; gap: 0.7rem; margin-bottom: 1rem; flex-wrap: wrap; align-items: center; }
+    .search-inp {
+      background: var(--s2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.6rem 0.9rem;
+      color: var(--text); font-size: 0.88rem; min-height: 38px;
+      font-family: inherit; transition: border-color 0.2s;
     }
-    .search-input:focus { outline: none; border-color: var(--gold); }
+    .search-inp:focus { outline: none; border-color: var(--gold); }
+    .search-inp.flex1 { flex: 1; min-width: 180px; }
 
     /* Modal */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-      display: none; justify-content: center; align-items: center; z-index: 200;
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 300; padding: 1rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s;
     }
-    .modal-overlay.open { display: flex; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
     .modal-box {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 2rem;
-      width: 90%; max-width: 620px;
+      background: var(--s1); border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 14px; padding: clamp(1.2rem, 3vw, 1.8rem);
+      width: 100%; max-width: 600px;
       max-height: 90vh; overflow-y: auto;
+      transform: scale(0.97);
+      transition: transform 0.25s;
     }
+    .modal-overlay.open .modal-box { transform: scale(1); }
     .modal-title {
-      font-size: 1.2rem; font-weight: 700;
-      margin-bottom: 1.5rem; color: var(--gold);
-      padding-bottom: 1rem; border-bottom: 1px solid var(--border);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; color: var(--gold);
+      margin-bottom: 1.3rem; padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    /* Notification */
-    .toast {
-      position: fixed; bottom: 1.5rem; right: 1.5rem;
-      padding: 1rem 1.5rem; border-radius: 10px;
-      font-weight: 600; display: none; z-index: 999;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-      animation: toastIn 0.3s ease;
-      max-width: 320px;
-    }
-    .toast.success { background: var(--success); color: #000; }
-    .toast.error { background: var(--error); color: #fff; }
-    .toast.info { background: var(--info); color: #fff; }
-    @keyframes toastIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    /* Loading */
-    .loading { text-align: center; padding: 3rem; color: var(--text-muted); }
-    .loading i { font-size: 2rem; color: var(--gold); display: block; margin-bottom: 1rem; }
-
-    /* Toggle switch */
+    /* Toggle */
     .toggle-wrap { display: flex; align-items: center; gap: 8px; }
-    .toggle {
-      position: relative; width: 44px; height: 24px;
-      cursor: pointer;
-    }
+    .toggle { position: relative; width: 42px; height: 23px; cursor: pointer; display: inline-block; }
     .toggle input { opacity: 0; width: 0; height: 0; }
     .toggle-slider {
-      position: absolute; inset: 0;
-      background: var(--border); border-radius: 24px;
-      transition: 0.3s;
+      position: absolute; inset: 0; background: var(--border);
+      border-radius: 23px; transition: 0.3s;
     }
     .toggle-slider::before {
       content: ''; position: absolute;
-      width: 18px; height: 18px;
-      left: 3px; top: 3px;
+      width: 17px; height: 17px; left: 3px; top: 3px;
       background: white; border-radius: 50%; transition: 0.3s;
     }
     .toggle input:checked + .toggle-slider { background: var(--gold); }
-    .toggle input:checked + .toggle-slider::before { transform: translateX(20px); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(19px); }
 
-    /* Responsive sidebar */
-    @media (max-width: 768px) {
-      .sidebar { width: 200px; }
-      .main { margin-left: 200px; padding: 1rem; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .form-grid { grid-template-columns: 1fr; }
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 1.2rem; right: 1.2rem;
+      padding: 0.85rem 1.3rem; border-radius: 10px;
+      font-weight: 600; font-size: 0.88rem;
+      display: none; z-index: 999;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      max-width: 300px; animation: toastIn 0.3s ease;
     }
-    @media (max-width: 600px) {
-      .sidebar { display: none; }
-      .main { margin-left: 0; }
+    @keyframes toastIn { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+    /* Settings tabs */
+    .settings-tabs {
+      display: flex; gap: 0.4rem;
+      flex-wrap: wrap; margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
     }
+    .settings-tab {
+      background: var(--s2); border: 1px solid var(--border);
+      color: var(--muted); padding: 0.5rem 1.1rem;
+      border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+      font-weight: 500; transition: all 0.2s;
+    }
+    .settings-tab.active { background: var(--gold-dim); color: var(--gold); border-color: rgba(201,168,76,0.3); }
+    .settings-section { display: none; }
+    .settings-section.active { display: block; }
 
-    /* Empty state */
-    .empty-state { text-align: center; padding: 3rem; color: var(--text-muted); }
-    .empty-state i { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+    /* Branch list */
+    .branch-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 1rem; background: var(--s2);
+      border: 1px solid var(--border); border-radius: var(--r);
+      margin-bottom: 0.8rem;
+    }
+    .branch-info { flex: 1; }
+    .branch-info h4 { font-weight: 600; margin-bottom: 3px; }
+    .branch-info p { font-size: 0.82rem; color: var(--muted); }
+    .branch-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
 
-    /* Category chip */
+    /* Category chips */
     .cat-chip {
       display: inline-flex; align-items: center; gap: 6px;
-      background: var(--surface3); border: 1px solid var(--border);
+      background: var(--s3); border: 1px solid var(--border);
       border-radius: 20px; padding: 4px 12px;
-      font-size: 0.82rem; margin: 3px;
+      font-size: 0.8rem; margin: 3px;
     }
     .cat-chip button {
       background: none; border: none; color: var(--error);
-      cursor: pointer; font-size: 0.9rem; line-height: 1;
+      cursor: pointer; font-size: 0.9rem; padding: 0;
     }
+
+    /* Empty */
+    .empty-state {
+      text-align: center; padding: 3rem; color: var(--muted);
+    }
+    .empty-state i { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+
+    /* Loading */
+    .loading-row td { text-align: center; padding: 2rem; color: var(--muted); }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      :root { --sidebar: 200px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .sidebar.open { transform: translateX(0); box-shadow: 8px 0 30px rgba(0,0,0,0.6); }
+      .close-sidebar-btn { display: block; }
+      .main { margin-left: 0; }
+      .sidebar-toggle { display: flex; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar overlay for mobile */
+    .sidebar-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 99; display: none;
+    }
+    .sidebar-backdrop.show { display: block; }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════ LOGIN ════════════════════════ -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo"><i class="fas fa-crown"></i> LuxeWear</div>
-    <p class="login-subtitle">Admin Dashboard</p>
+    <p class="login-sub">Admin Dashboard</p>
     <div class="login-form">
-      <input type="email" id="login-email" placeholder="Admin Email" autocomplete="email">
-      <input type="password" id="login-pass" placeholder="Password" autocomplete="current-password">
-      <div class="login-err" id="login-err"></div>
-      <button class="login-btn" id="login-btn">
-        <i class="fas fa-sign-in-alt"></i> Login
-      </button>
+      <input type="email" id="l-email" placeholder="Admin Email" autocomplete="email">
+      <input type="password" id="l-pass" placeholder="Password" autocomplete="current-password">
+      <div class="login-err" id="l-err"></div>
+      <button class="login-btn" id="l-btn"><i class="fas fa-sign-in-alt"></i> Sign In</button>
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════ APP ═════════════════════════ -->
+<!-- SIDEBAR BACKDROP (mobile) -->
+<div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+<!-- APP -->
 <div id="app">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-logo"><i class="fas fa-crown"></i> LuxeWear</div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <i class="fas fa-crown"></i>
+      <span>LuxeWear</span>
+      <button class="close-sidebar-btn" id="close-sidebar"><i class="fas fa-times"></i></button>
+    </div>
     <nav class="sidebar-nav">
       <div class="nav-item active" data-panel="dashboard"><i class="fas fa-chart-bar"></i> Dashboard</div>
+      <div class="nav-item" data-panel="settings"><i class="fas fa-sliders-h"></i> Website Settings</div>
       <div class="nav-item" data-panel="products"><i class="fas fa-box"></i> Products</div>
-      <div class="nav-item" data-panel="orders"><i class="fas fa-shopping-bag"></i> Orders</div>
+      <div class="nav-item" data-panel="orders"><i class="fas fa-shopping-bag"></i> Orders <span class="nav-badge" id="pending-badge" style="display:none;">0</span></div>
       <div class="nav-item" data-panel="coupons"><i class="fas fa-tag"></i> Coupons</div>
       <div class="nav-item" data-panel="categories"><i class="fas fa-layer-group"></i> Categories</div>
     </nav>
@@ -415,86 +488,263 @@
     </div>
   </aside>
 
-  <!-- Main Content -->
   <main class="main">
     <div class="topbar">
-      <div class="page-title"><span id="panel-name">Dashboard</span></div>
-      <div class="topbar-actions">
-        <div class="realtime-badge"><div class="realtime-dot"></div> Live</div>
+      <div style="display:flex;align-items:center;gap:0.8rem;">
+        <button class="sidebar-toggle" id="sidebar-toggle"><i class="fas fa-bars"></i></button>
+        <div class="page-title"><span class="gold" id="panel-name">Dashboard</span></div>
       </div>
+      <div class="live-badge"><div class="live-dot"></div> Live</div>
     </div>
 
-    <!-- ── Dashboard ─────────────────────────────────── -->
+    <!-- ── DASHBOARD ──────────────────────────────── -->
     <div class="panel active" id="panel-dashboard">
       <div class="stats-grid">
         <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-shopping-bag"></i></div>
+          <div class="stat-val" id="s-orders">—</div>
           <div class="stat-label">Total Orders</div>
-          <div class="stat-value" id="stat-orders">-</div>
-          <div class="stat-sub">All time</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Pending Orders</div>
-          <div class="stat-value" id="stat-pending">-</div>
-          <div class="stat-sub">Need attention</div>
+          <div class="stat-icon"><i class="fas fa-clock"></i></div>
+          <div class="stat-val" id="s-pending">—</div>
+          <div class="stat-label">Pending</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Total Revenue</div>
-          <div class="stat-value" id="stat-revenue">-</div>
-          <div class="stat-sub">Rs delivered orders</div>
+          <div class="stat-icon"><i class="fas fa-rupee-sign"></i></div>
+          <div class="stat-val" id="s-revenue">—</div>
+          <div class="stat-label">Revenue (Delivered)</div>
         </div>
         <div class="stat-card">
-          <div class="stat-label">Products</div>
-          <div class="stat-value" id="stat-products">-</div>
-          <div class="stat-sub">Active listings</div>
+          <div class="stat-icon"><i class="fas fa-box"></i></div>
+          <div class="stat-val" id="s-products">—</div>
+          <div class="stat-label">Active Products</div>
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title">Recent Orders</div></div>
+        <div class="card-hd"><div class="card-title">Recent Orders</div></div>
         <div class="table-wrap">
           <table>
-            <thead><tr>
-              <th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th>
-            </tr></thead>
-            <tbody id="dashboard-orders"></tbody>
+            <thead><tr><th>ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+            <tbody id="dash-orders"><tr><td colspan="5" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ── Products ───────────────────────────────────── -->
+    <!-- ── WEBSITE SETTINGS ───────────────────────── -->
+    <div class="panel" id="panel-settings">
+      <div class="settings-tabs">
+        <button class="settings-tab active" data-stab="brand">Brand</button>
+        <button class="settings-tab" data-stab="hero">Hero Section</button>
+        <button class="settings-tab" data-stab="about">About Section</button>
+        <button class="settings-tab" data-stab="contact">Contact & Social</button>
+        <button class="settings-tab" data-stab="branches">Branches</button>
+      </div>
+
+      <!-- Brand -->
+      <div class="settings-section active card" id="stab-brand">
+        <div class="card-title" style="margin-bottom:1.2rem;">Brand Identity</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Brand Name</label>
+            <input type="text" id="ss-brand-name" placeholder="LuxeWear">
+          </div>
+          <div class="form-group">
+            <label>Tagline</label>
+            <input type="text" id="ss-brand-tagline" placeholder="Premium Clothing Store">
+          </div>
+          <div class="form-group full">
+            <label>Logo Image</label>
+            <div class="img-tabs">
+              <button class="img-tab active" data-img-tab="logo-url">URL</button>
+              <button class="img-tab" data-img-tab="logo-upload">Upload</button>
+            </div>
+            <div class="img-panel active" data-img-panel="logo-url">
+              <input type="url" id="ss-logo-url" placeholder="https://...logo.png">
+            </div>
+            <div class="img-panel" data-img-panel="logo-upload">
+              <div class="upload-zone">
+                <input type="file" id="ss-logo-file" accept="image/*">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click or drag logo here</p>
+              </div>
+              <img class="upload-preview" id="logo-preview" alt="Logo preview">
+              <p class="upload-status" id="logo-upload-status"></p>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-gold" id="save-brand-btn"><i class="fas fa-save"></i> Save Brand</button>
+        </div>
+      </div>
+
+      <!-- Hero -->
+      <div class="settings-section card" id="stab-hero">
+        <div class="card-title" style="margin-bottom:1.2rem;">Hero Section</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Hero Title</label>
+            <input type="text" id="ss-hero-title" placeholder="Redefine Luxury Fashion">
+          </div>
+          <div class="form-group">
+            <label>CTA Button Text</label>
+            <input type="text" id="ss-hero-cta" placeholder="Shop Collection">
+          </div>
+          <div class="form-group full">
+            <label>Hero Subtitle</label>
+            <textarea id="ss-hero-subtitle" rows="2" placeholder="Discover premium clothing..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Hero Background Image</label>
+            <div class="img-tabs">
+              <button class="img-tab active" data-img-tab="hero-url">URL</button>
+              <button class="img-tab" data-img-tab="hero-upload">Upload</button>
+            </div>
+            <div class="img-panel active" data-img-panel="hero-url">
+              <input type="url" id="ss-hero-bg" placeholder="https://...hero.jpg">
+            </div>
+            <div class="img-panel" data-img-panel="hero-upload">
+              <div class="upload-zone">
+                <input type="file" id="ss-hero-file" accept="image/*">
+                <i class="fas fa-image"></i>
+                <p>Click or drag hero image</p>
+              </div>
+              <img class="upload-preview" id="hero-preview" alt="Hero preview">
+              <p class="upload-status" id="hero-upload-status"></p>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-gold" id="save-hero-btn"><i class="fas fa-save"></i> Save Hero</button>
+        </div>
+      </div>
+
+      <!-- About -->
+      <div class="settings-section card" id="stab-about">
+        <div class="card-title" style="margin-bottom:1.2rem;">About Section</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Section Title</label>
+            <input type="text" id="ss-about-title" placeholder="Our Story">
+          </div>
+          <div class="form-group full">
+            <label>About Text (Paragraph 1)</label>
+            <textarea id="ss-about-text" rows="3" placeholder="Your story..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>About Text (Paragraph 2)</label>
+            <textarea id="ss-about-text2" rows="3" placeholder="More about your brand..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label>About Image</label>
+            <div class="img-tabs">
+              <button class="img-tab active" data-img-tab="about-url">URL</button>
+              <button class="img-tab" data-img-tab="about-upload">Upload</button>
+            </div>
+            <div class="img-panel active" data-img-panel="about-url">
+              <input type="url" id="ss-about-img" placeholder="https://...about.jpg">
+            </div>
+            <div class="img-panel" data-img-panel="about-upload">
+              <div class="upload-zone">
+                <input type="file" id="ss-about-file" accept="image/*">
+                <i class="fas fa-image"></i>
+                <p>Click or drag about image</p>
+              </div>
+              <img class="upload-preview" id="about-preview" alt="About preview">
+              <p class="upload-status" id="about-upload-status"></p>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-gold" id="save-about-btn"><i class="fas fa-save"></i> Save About</button>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="settings-section card" id="stab-contact">
+        <div class="card-title" style="margin-bottom:1.2rem;">Contact & Social</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="ss-phone" placeholder="+977 9812345678">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="ss-email" placeholder="info@luxewear.com">
+          </div>
+          <div class="form-group full">
+            <label>Address</label>
+            <input type="text" id="ss-address" placeholder="Itahari, Nepal">
+          </div>
+          <div class="form-group full">
+            <label>WhatsApp Order Number (with country code)</label>
+            <input type="text" id="ss-whatsapp-num" placeholder="+9779812345678">
+          </div>
+          <div class="form-group">
+            <label>Facebook URL</label>
+            <input type="url" id="ss-fb" placeholder="https://facebook.com/...">
+          </div>
+          <div class="form-group">
+            <label>Instagram URL</label>
+            <input type="url" id="ss-ig" placeholder="https://instagram.com/...">
+          </div>
+          <div class="form-group">
+            <label>Twitter URL</label>
+            <input type="url" id="ss-tw" placeholder="https://twitter.com/...">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Social Link</label>
+            <input type="url" id="ss-wa" placeholder="https://wa.me/977...">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-gold" id="save-contact-btn"><i class="fas fa-save"></i> Save Contact</button>
+        </div>
+      </div>
+
+      <!-- Branches -->
+      <div class="settings-section card" id="stab-branches">
+        <div class="card-hd">
+          <div class="card-title">Store Locations / Branches</div>
+          <button class="btn-gold" id="btn-add-branch"><i class="fas fa-plus"></i> Add Branch</button>
+        </div>
+        <div id="branches-list"><div class="empty-state"><i class="fas fa-store"></i>No branches yet.</div></div>
+      </div>
+    </div>
+
+    <!-- ── PRODUCTS ────────────────────────────────── -->
     <div class="panel" id="panel-products">
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Product Management</div>
+        <div class="card-hd">
+          <div class="card-title">Products</div>
           <button class="btn-gold" id="btn-add-product"><i class="fas fa-plus"></i> Add Product</button>
         </div>
         <div class="filter-bar">
-          <input type="text" class="search-input" id="products-search" placeholder="Search products...">
-          <select class="search-input" id="products-cat-filter" style="flex:0;min-width:150px;">
+          <input type="text" class="search-inp flex1" id="p-search" placeholder="Search products...">
+          <select class="search-inp" id="p-cat-filter" style="min-width:140px;">
             <option value="">All Categories</option>
           </select>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr>
-              <th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th>
-            </tr></thead>
-            <tbody id="products-table"></tbody>
+            <thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="products-table"><tr><td colspan="7" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ── Orders ─────────────────────────────────────── -->
+    <!-- ── ORDERS ─────────────────────────────────── -->
     <div class="panel" id="panel-orders">
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Order Management</div>
-          <div class="realtime-badge" style="font-size:0.8rem;"><div class="realtime-dot"></div> Real-time</div>
+        <div class="card-hd">
+          <div class="card-title">Orders</div>
+          <div class="live-badge"><div class="live-dot"></div> Real-time</div>
         </div>
         <div class="filter-bar">
-          <input type="text" class="search-input" id="orders-search" placeholder="Search orders...">
-          <select class="search-input" id="orders-status-filter" style="flex:0;min-width:150px;">
+          <input type="text" class="search-inp flex1" id="o-search" placeholder="Search orders...">
+          <select class="search-inp" id="o-status" style="min-width:140px;">
             <option value="">All Statuses</option>
             <option value="pending">Pending</option>
             <option value="confirmed">Confirmed</option>
@@ -505,237 +755,217 @@
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr>
-              <th>ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Coupon</th><th>Status</th><th>Date</th><th>Action</th>
-            </tr></thead>
-            <tbody id="orders-table"></tbody>
+            <thead><tr><th>ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Coupon</th><th>Status</th><th>Date</th><th></th></tr></thead>
+            <tbody id="orders-table"><tr><td colspan="8" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ── Coupons ────────────────────────────────────── -->
+    <!-- ── COUPONS ────────────────────────────────── -->
     <div class="panel" id="panel-coupons">
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Coupon Management</div>
+        <div class="card-hd">
+          <div class="card-title">Coupons</div>
           <button class="btn-gold" id="btn-add-coupon"><i class="fas fa-plus"></i> Create Coupon</button>
         </div>
         <div class="table-wrap">
           <table>
-            <thead><tr>
-              <th>Code</th><th>Type</th><th>Value</th><th>Min Order</th><th>Expiry</th><th>Used</th><th>Status</th><th>Actions</th>
-            </tr></thead>
-            <tbody id="coupons-table"></tbody>
+            <thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min Order</th><th>Expiry</th><th>Used</th><th>Active</th><th>Actions</th></tr></thead>
+            <tbody id="coupons-table"><tr><td colspan="8" class="loading-row"><i class="fas fa-spinner fa-spin"></i></td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- ── Categories ─────────────────────────────────── -->
+    <!-- ── CATEGORIES ─────────────────────────────── -->
     <div class="panel" id="panel-categories">
       <div class="card">
-        <div class="card-header">
-          <div class="card-title">Category Management</div>
-        </div>
-        <div style="display:flex;gap:0.8rem;margin-bottom:1.5rem;align-items:center;">
-          <input type="text" class="search-input" id="new-cat-name" placeholder="Category Name (e.g. Jackets)" style="flex:1;">
+        <div class="card-hd"><div class="card-title">Categories</div></div>
+        <div style="display:flex;gap:0.7rem;margin-bottom:1.2rem;align-items:center;">
+          <input type="text" class="search-inp flex1" id="new-cat" placeholder="Category name (e.g. Jackets)">
           <button class="btn-gold" id="btn-add-cat"><i class="fas fa-plus"></i> Add</button>
         </div>
-        <div id="categories-list"></div>
+        <div id="cat-list"><div class="empty-state"><i class="fas fa-layer-group"></i>No categories.</div></div>
       </div>
     </div>
   </main>
 </div>
 
-<!-- ══════════════════ MODALS ════════════════════════════ -->
-
-<!-- Product Modal -->
+<!-- ── PRODUCT MODAL ──────────────────────────────── -->
 <div class="modal-overlay" id="product-modal">
   <div class="modal-box">
     <div class="modal-title" id="product-modal-title">Add Product</div>
-    <input type="hidden" id="product-id">
+    <input type="hidden" id="pid">
     <div class="form-grid">
-      <div class="form-group">
-        <label>Product Name *</label>
-        <input type="text" id="p-name" placeholder="e.g. Air Max 90">
-      </div>
-      <div class="form-group">
-        <label>Category *</label>
-        <select id="p-category">
-          <option value="">Select category</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Price (Rs) *</label>
-        <input type="number" id="p-price" placeholder="999">
-      </div>
-      <div class="form-group">
-        <label>Old Price (Rs)</label>
-        <input type="number" id="p-old-price" placeholder="1499">
-      </div>
-      <div class="form-group">
-        <label>Stock *</label>
-        <input type="number" id="p-stock" placeholder="50">
-      </div>
-      <div class="form-group">
-        <label>Active</label>
-        <div class="toggle-wrap" style="margin-top:8px;">
-          <label class="toggle">
-            <input type="checkbox" id="p-active" checked>
-            <span class="toggle-slider"></span>
-          </label>
-          <span style="color:var(--text-muted);font-size:0.85rem;">Product visible</span>
+      <div class="form-group"><label>Name *</label><input type="text" id="pm-name" placeholder="Product name"></div>
+      <div class="form-group"><label>Category *</label><select id="pm-cat"><option value="">Select</option></select></div>
+      <div class="form-group"><label>Price (Rs) *</label><input type="number" id="pm-price" placeholder="999"></div>
+      <div class="form-group"><label>Old Price (Rs)</label><input type="number" id="pm-oldprice" placeholder="1499"></div>
+      <div class="form-group"><label>Stock *</label><input type="number" id="pm-stock" placeholder="50"></div>
+      <div class="form-group"><label>Visible</label>
+        <div class="toggle-wrap" style="margin-top:10px;">
+          <label class="toggle"><input type="checkbox" id="pm-active" checked><span class="toggle-slider"></span></label>
+          <span style="color:var(--muted);font-size:0.82rem;">Product active</span>
         </div>
       </div>
-      <div class="form-group full">
-        <label>Description</label>
-        <textarea id="p-desc" rows="2" placeholder="Short product description"></textarea>
-      </div>
+      <div class="form-group full"><label>Description</label><textarea id="pm-desc" rows="2" placeholder="Short description"></textarea></div>
       <div class="form-group full">
         <label>Product Image</label>
         <div class="img-tabs">
-          <button class="img-tab active" data-img-tab="url">URL</button>
-          <button class="img-tab" data-img-tab="upload">Upload</button>
+          <button class="img-tab active" data-img-tab="pimg-url">URL</button>
+          <button class="img-tab" data-img-tab="pimg-upload">Upload</button>
         </div>
-        <div class="img-panel active" data-img-panel="url">
-          <input type="url" id="p-image-url" placeholder="https://...image.jpg">
+        <div class="img-panel active" data-img-panel="pimg-url">
+          <input type="url" id="pm-imgurl" placeholder="https://...image.jpg">
         </div>
-        <div class="img-panel" data-img-panel="upload">
-          <div class="upload-zone" id="upload-zone">
-            <input type="file" id="p-image-file" accept="image/*">
+        <div class="img-panel" data-img-panel="pimg-upload">
+          <div class="upload-zone">
+            <input type="file" id="pm-imgfile" accept="image/*">
             <i class="fas fa-cloud-upload-alt"></i>
-            <p>Click or drag image here</p>
-            <small>Max 5MB · JPG, PNG, WebP</small>
+            <p>Click or drag image</p>
           </div>
-          <img id="upload-preview" alt="Preview">
-          <p id="upload-status" style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;"></p>
+          <img class="upload-preview" id="pm-preview" alt="Preview">
+          <p class="upload-status" id="pm-status"></p>
         </div>
       </div>
     </div>
     <div class="form-actions">
       <button class="btn-ghost" onclick="closeModal('product-modal')">Cancel</button>
-      <button class="btn-gold" id="save-product-btn"><i class="fas fa-save"></i> Save Product</button>
+      <button class="btn-gold" id="save-product-btn"><i class="fas fa-save"></i> Save</button>
     </div>
   </div>
 </div>
 
-<!-- Coupon Modal -->
+<!-- ── COUPON MODAL ───────────────────────────────── -->
 <div class="modal-overlay" id="coupon-modal">
   <div class="modal-box">
     <div class="modal-title" id="coupon-modal-title">Create Coupon</div>
-    <input type="hidden" id="coupon-id">
+    <input type="hidden" id="cid">
     <div class="form-grid">
-      <div class="form-group">
-        <label>Coupon Code *</label>
-        <input type="text" id="c-code" placeholder="LUXE20" style="text-transform:uppercase;">
-      </div>
-      <div class="form-group">
-        <label>Discount Type *</label>
-        <select id="c-type">
-          <option value="percent">Percent (%)</option>
-          <option value="fixed">Fixed (Rs)</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Value *</label>
-        <input type="number" id="c-value" placeholder="10">
-      </div>
-      <div class="form-group">
-        <label>Minimum Order (Rs)</label>
-        <input type="number" id="c-min" placeholder="0">
-      </div>
-      <div class="form-group">
-        <label>Expiry Date</label>
-        <input type="date" id="c-expiry">
-      </div>
-      <div class="form-group">
-        <label>Status</label>
-        <div class="toggle-wrap" style="margin-top:8px;">
-          <label class="toggle">
-            <input type="checkbox" id="c-active" checked>
-            <span class="toggle-slider"></span>
-          </label>
-          <span style="color:var(--text-muted);font-size:0.85rem;">Active</span>
+      <div class="form-group"><label>Code *</label><input type="text" id="cm-code" placeholder="LUXE20" style="text-transform:uppercase;"></div>
+      <div class="form-group"><label>Type *</label><select id="cm-type"><option value="percent">Percent (%)</option><option value="fixed">Fixed (Rs)</option></select></div>
+      <div class="form-group"><label>Value *</label><input type="number" id="cm-value" placeholder="10"></div>
+      <div class="form-group"><label>Min Order (Rs)</label><input type="number" id="cm-min" placeholder="0"></div>
+      <div class="form-group"><label>Expiry Date</label><input type="date" id="cm-expiry"></div>
+      <div class="form-group"><label>Active</label>
+        <div class="toggle-wrap" style="margin-top:10px;">
+          <label class="toggle"><input type="checkbox" id="cm-active" checked><span class="toggle-slider"></span></label>
         </div>
       </div>
     </div>
-    <div style="margin-top:0.8rem;padding:0.8rem;background:var(--surface2);border-radius:8px;">
-      <button class="btn-sm" id="gen-code-btn" style="margin-bottom:8px;"><i class="fas fa-magic"></i> Generate Random Code</button>
+    <div style="margin:0.8rem 0;padding:0.8rem;background:var(--s2);border-radius:8px;">
+      <button class="btn-sm" id="gen-code-btn"><i class="fas fa-magic"></i> Generate Random Code</button>
     </div>
     <div class="form-actions">
       <button class="btn-ghost" onclick="closeModal('coupon-modal')">Cancel</button>
-      <button class="btn-gold" id="save-coupon-btn"><i class="fas fa-save"></i> Save Coupon</button>
+      <button class="btn-gold" id="save-coupon-btn"><i class="fas fa-save"></i> Save</button>
     </div>
   </div>
 </div>
 
-<!-- Toast -->
+<!-- ── BRANCH MODAL ───────────────────────────────── -->
+<div class="modal-overlay" id="branch-modal">
+  <div class="modal-box">
+    <div class="modal-title" id="branch-modal-title">Add Branch</div>
+    <input type="hidden" id="branch-id">
+    <div class="form-grid">
+      <div class="form-group full"><label>Branch Name *</label><input type="text" id="bm-name" placeholder="Main Store"></div>
+      <div class="form-group full"><label>Address *</label><textarea id="bm-address" rows="2" placeholder="Full address"></textarea></div>
+      <div class="form-group"><label>Phone</label><input type="text" id="bm-phone" placeholder="+977..."></div>
+      <div class="form-group"><label>Google Maps URL</label><input type="url" id="bm-maps" placeholder="https://maps.google.com/..."></div>
+      <div class="form-group"><label>Sort Order</label><input type="number" id="bm-sort" placeholder="1" value="1"></div>
+      <div class="form-group"><label>Active</label>
+        <div class="toggle-wrap" style="margin-top:10px;">
+          <label class="toggle"><input type="checkbox" id="bm-active" checked><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-ghost" onclick="closeModal('branch-modal')">Cancel</button>
+      <button class="btn-gold" id="save-branch-btn"><i class="fas fa-save"></i> Save</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-// ════════════════════════════════════════════════════════
-// CONFIG — Replace with your actual credentials
-// ════════════════════════════════════════════════════════
- const SUPABASE_URL = 'https://xurtxmbfnwjlelisfoqa.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1cnR4bWJmbndqbGVsaXNmb3FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzkwNTcsImV4cCI6MjA4OTU1NTA1N30.CGsRggiPlaxZBcQeU0rnLoQwaKQKxq81guNJD6qtaJY';
-const STORAGE_BUCKET = 'product-images';
+// ════════════════════════════════════════════════════
+// CONFIG
+// ════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://xurtxmbfnwjlelisfoqa.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1cnR4bWJmbndqbGVsaXNmb3FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NzkwNTcsImV4cCI6MjA4OTU1NTA1N30.CGsRggiPlaxZBcQeU0rnLoQwaKQKxq81guNJD6qtaJY';
+const BUCKET = 'product-images';
 
 const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ── Utility ───────────────────────────────────────────
+// ── Utils ─────────────────────────────────────────
 function toast(msg, type = 'success') {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.className = `toast ${type}`;
+  el.style.background = type === 'error' ? 'var(--error)' : type === 'info' ? 'var(--info)' : 'var(--success)';
+  el.style.color = type === 'info' ? '#fff' : type === 'error' ? '#fff' : '#000';
   el.style.display = 'block';
   clearTimeout(el._t);
   el._t = setTimeout(() => el.style.display = 'none', 3500);
 }
-
 function openModal(id) { document.getElementById(id).classList.add('open'); }
-window.closeModal = function(id) { document.getElementById(id).classList.remove('open'); };
-
+window.closeModal = id => document.getElementById(id).classList.remove('open');
 function fmtDate(d) {
-  if (!d) return '-';
-  return new Date(d).toLocaleDateString('en-NP', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
-}
-
-function fmtShortDate(d) {
-  if (!d) return '-';
+  if (!d) return '—';
   return new Date(d).toLocaleDateString('en-NP', { day:'2-digit', month:'short', year:'numeric' });
 }
 
-// ── Auth ──────────────────────────────────────────────
+// Upload helper
+async function uploadFile(file, prefix = 'uploads') {
+  const ext = file.name.split('.').pop();
+  const path = `${prefix}/${Date.now()}.${ext}`;
+  const { error } = await db.storage.from(BUCKET).upload(path, file, { contentType: file.type, upsert: true });
+  if (error) throw error;
+  const { data } = db.storage.from(BUCKET).getPublicUrl(path);
+  return data.publicUrl;
+}
+
+// ── Img tab helper ────────────────────────────────
+function setupImgTabs(scope) {
+  (scope || document).querySelectorAll('.img-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const parent = tab.closest('.form-group') || tab.parentElement.parentElement;
+      parent.querySelectorAll('.img-tab').forEach(t => t.classList.remove('active'));
+      parent.querySelectorAll('.img-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      parent.querySelector(`[data-img-panel="${tab.dataset.imgTab}"]`).classList.add('active');
+    });
+  });
+}
+
+// ── Auth ──────────────────────────────────────────
 async function checkAuth() {
   const { data: { session } } = await db.auth.getSession();
   if (session) showApp();
 }
-
-document.getElementById('login-btn').addEventListener('click', async () => {
-  const email = document.getElementById('login-email').value.trim();
-  const pass  = document.getElementById('login-pass').value;
-  const errEl = document.getElementById('login-err');
-  errEl.textContent = '';
-
-  const btn = document.getElementById('login-btn');
-  btn.textContent = 'Logging in...'; btn.disabled = true;
-
+document.getElementById('l-btn').addEventListener('click', async () => {
+  const email = document.getElementById('l-email').value.trim();
+  const pass  = document.getElementById('l-pass').value;
+  const err   = document.getElementById('l-err');
+  err.textContent = '';
+  const btn = document.getElementById('l-btn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
   const { error } = await db.auth.signInWithPassword({ email, password: pass });
   btn.disabled = false;
-  btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-
-  if (error) { errEl.textContent = error.message; return; }
+  btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+  if (error) { err.textContent = error.message; return; }
   showApp();
 });
-
-document.getElementById('login-email').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('login-btn').click(); });
-document.getElementById('login-pass').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('login-btn').click(); });
-
+['l-email','l-pass'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('l-btn').click();
+  });
+});
 document.getElementById('logout-btn').addEventListener('click', async () => {
   await db.auth.signOut();
   document.getElementById('app').style.display = 'none';
@@ -746,277 +976,504 @@ function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   loadDashboard();
+  loadSiteSettings();
+  loadBranches();
   loadProducts();
   loadOrders();
   loadCoupons();
   loadCategories();
   setupRealtimeOrders();
+  setupImgTabs();
 }
 
-// ── Navigation ────────────────────────────────────────
+// ── Nav ───────────────────────────────────────────
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     item.classList.add('active');
     document.getElementById('panel-' + item.dataset.panel).classList.add('active');
-    document.getElementById('panel-name').textContent = item.textContent.trim();
+    document.getElementById('panel-name').textContent = item.textContent.trim().replace(/\d+/g,'');
+    // Close sidebar on mobile
+    if (window.innerWidth <= 640) closeSidebar();
   });
 });
 
-// ════════════════════════════════════════════════════════
+// Mobile sidebar
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-backdrop').classList.remove('show');
+}
+document.getElementById('sidebar-toggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-backdrop').classList.toggle('show');
+});
+document.getElementById('sidebar-backdrop').addEventListener('click', closeSidebar);
+document.getElementById('close-sidebar').addEventListener('click', closeSidebar);
+
+// Modal backdrop
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+});
+
+// Settings tabs
+document.querySelectorAll('.settings-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('stab-' + tab.dataset.stab).classList.add('active');
+  });
+});
+
+// ════════════════════════════════════════════════════
 // DASHBOARD
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 async function loadDashboard() {
-  const [ordersRes, productsRes] = await Promise.all([
-    db.from('orders').select('id, status, final_amount, created_at, customer_name, phone, coupon_code'),
+  const [{ data: orders }, { data: products }] = await Promise.all([
+    db.from('orders').select('id,status,final_amount,created_at,customer_name'),
     db.from('products').select('id').eq('active', true)
   ]);
 
-  const orders = ordersRes.data || [];
-  const pending = orders.filter(o => o.status === 'pending').length;
-  const revenue = orders.filter(o => o.status === 'delivered').reduce((s, o) => s + o.final_amount, 0);
+  const ords = orders || [];
+  const pending = ords.filter(o => o.status === 'pending');
+  const revenue = ords.filter(o => o.status === 'delivered').reduce((s, o) => s + (o.final_amount || 0), 0);
 
-  document.getElementById('stat-orders').textContent = orders.length;
-  document.getElementById('stat-pending').textContent = pending;
-  document.getElementById('stat-revenue').textContent = `Rs ${revenue.toLocaleString()}`;
-  document.getElementById('stat-products').textContent = (productsRes.data || []).length;
+  document.getElementById('s-orders').textContent = ords.length;
+  document.getElementById('s-pending').textContent = pending.length;
+  document.getElementById('s-revenue').textContent = `Rs ${revenue.toLocaleString()}`;
+  document.getElementById('s-products').textContent = (products || []).length;
 
-  // Recent orders (last 10)
-  const recent = [...orders].sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 10);
-  document.getElementById('dashboard-orders').innerHTML = recent.map(o => `
-    <tr>
-      <td style="font-family:monospace;font-size:0.8rem;">${o.id.substring(0,8).toUpperCase()}</td>
-      <td>${o.customer_name}</td>
-      <td style="color:var(--gold);font-weight:600;">Rs ${o.final_amount}</td>
-      <td><span class="badge badge-${o.status}">${o.status}</span></td>
-      <td style="color:var(--text-muted);font-size:0.82rem;">${fmtShortDate(o.created_at)}</td>
-    </tr>`).join('') || '<tr><td colspan="5" class="empty-state"><i class="fas fa-inbox"></i>No orders yet</td></tr>';
+  // Update pending badge
+  const badge = document.getElementById('pending-badge');
+  if (pending.length > 0) { badge.textContent = pending.length; badge.style.display = 'flex'; }
+  else badge.style.display = 'none';
+
+  const recent = [...ords].sort((a,b) => new Date(b.created_at)-new Date(a.created_at)).slice(0,8);
+  document.getElementById('dash-orders').innerHTML = recent.length
+    ? recent.map(o => `
+        <tr>
+          <td style="font-family:monospace;font-size:0.78rem;">${o.id.substring(0,8).toUpperCase()}</td>
+          <td>${o.customer_name}</td>
+          <td style="color:var(--gold);font-weight:700;">Rs ${o.final_amount}</td>
+          <td><span class="badge badge-${o.status}">${o.status}</span></td>
+          <td style="color:var(--muted);font-size:0.8rem;">${fmtDate(o.created_at)}</td>
+        </tr>`).join('')
+    : '<tr><td colspan="5" class="empty-state">No orders yet.</td></tr>';
 }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
+// SITE SETTINGS
+// ════════════════════════════════════════════════════
+let settings = {};
+
+async function loadSiteSettings() {
+  const { data } = await db.from('site_settings').select('key,value');
+  if (data) data.forEach(r => settings[r.key] = r.value || '');
+
+  // Populate fields
+  document.getElementById('ss-brand-name').value    = settings.brand_name || '';
+  document.getElementById('ss-brand-tagline').value = settings.brand_tagline || '';
+  document.getElementById('ss-logo-url').value      = settings.brand_logo_url || '';
+  document.getElementById('ss-hero-title').value    = settings.hero_title || '';
+  document.getElementById('ss-hero-subtitle').value = settings.hero_subtitle || '';
+  document.getElementById('ss-hero-bg').value       = settings.hero_bg_url || '';
+  document.getElementById('ss-hero-cta').value      = settings.hero_cta_text || '';
+  document.getElementById('ss-about-title').value   = settings.about_title || '';
+  document.getElementById('ss-about-text').value    = settings.about_text || '';
+  document.getElementById('ss-about-text2').value   = settings.about_text2 || '';
+  document.getElementById('ss-about-img').value     = settings.about_image_url || '';
+  document.getElementById('ss-phone').value         = settings.contact_phone || '';
+  document.getElementById('ss-email').value         = settings.contact_email || '';
+  document.getElementById('ss-address').value       = settings.contact_address || '';
+  document.getElementById('ss-whatsapp-num').value  = settings.whatsapp_number || '';
+  document.getElementById('ss-fb').value            = settings.social_facebook || '';
+  document.getElementById('ss-ig').value            = settings.social_instagram || '';
+  document.getElementById('ss-tw').value            = settings.social_twitter || '';
+  document.getElementById('ss-wa').value            = settings.social_whatsapp || '';
+}
+
+async function saveSettings(pairs) {
+  for (const [key, value] of Object.entries(pairs)) {
+    const { error } = await db.from('site_settings')
+      .upsert({ key, value }, { onConflict: 'key' });
+    if (error) throw new Error(`Failed saving ${key}: ${error.message}`);
+    settings[key] = value;
+  }
+}
+
+async function handleImgField(fileInput, urlInput, prefix = 'uploads') {
+  if (fileInput.files.length > 0) {
+    return await uploadFile(fileInput.files[0], prefix);
+  }
+  return urlInput.value.trim();
+}
+
+// Save Brand
+document.getElementById('save-brand-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('save-brand-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+  try {
+    let logoUrl = await handleImgField(
+      document.getElementById('ss-logo-file'),
+      document.getElementById('ss-logo-url'),
+      'logos'
+    );
+    await saveSettings({
+      brand_name: document.getElementById('ss-brand-name').value.trim(),
+      brand_tagline: document.getElementById('ss-brand-tagline').value.trim(),
+      brand_logo_url: logoUrl
+    });
+    toast('Brand settings saved!');
+  } catch(e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Brand';
+});
+
+// Save Hero
+document.getElementById('save-hero-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('save-hero-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+  try {
+    let heroBg = await handleImgField(
+      document.getElementById('ss-hero-file'),
+      document.getElementById('ss-hero-bg'),
+      'hero'
+    );
+    await saveSettings({
+      hero_title: document.getElementById('ss-hero-title').value.trim(),
+      hero_subtitle: document.getElementById('ss-hero-subtitle').value.trim(),
+      hero_bg_url: heroBg,
+      hero_cta_text: document.getElementById('ss-hero-cta').value.trim()
+    });
+    toast('Hero section saved!');
+  } catch(e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Hero';
+});
+
+// Save About
+document.getElementById('save-about-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('save-about-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+  try {
+    let aboutImg = await handleImgField(
+      document.getElementById('ss-about-file'),
+      document.getElementById('ss-about-img'),
+      'about'
+    );
+    await saveSettings({
+      about_title: document.getElementById('ss-about-title').value.trim(),
+      about_text: document.getElementById('ss-about-text').value.trim(),
+      about_text2: document.getElementById('ss-about-text2').value.trim(),
+      about_image_url: aboutImg
+    });
+    toast('About section saved!');
+  } catch(e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save About';
+});
+
+// Save Contact
+document.getElementById('save-contact-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('save-contact-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+  try {
+    await saveSettings({
+      contact_phone: document.getElementById('ss-phone').value.trim(),
+      contact_email: document.getElementById('ss-email').value.trim(),
+      contact_address: document.getElementById('ss-address').value.trim(),
+      whatsapp_number: document.getElementById('ss-whatsapp-num').value.trim(),
+      social_facebook: document.getElementById('ss-fb').value.trim(),
+      social_instagram: document.getElementById('ss-ig').value.trim(),
+      social_twitter: document.getElementById('ss-tw').value.trim(),
+      social_whatsapp: document.getElementById('ss-wa').value.trim()
+    });
+    toast('Contact settings saved!');
+  } catch(e) { toast(e.message, 'error'); }
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Contact';
+});
+
+// File previews
+['ss-logo-file','ss-hero-file','ss-about-file'].forEach((id, i) => {
+  const previews = ['logo-preview','hero-preview','about-preview'];
+  const statuses = ['logo-upload-status','hero-upload-status','about-upload-status'];
+  document.getElementById(id).addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const preview = document.getElementById(previews[i]);
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+    document.getElementById(statuses[i]).textContent = file.name;
+  });
+});
+
+// ════════════════════════════════════════════════════
+// BRANCHES
+// ════════════════════════════════════════════════════
+let allBranches = [];
+
+async function loadBranches() {
+  const { data } = await db.from('branches').select('*').order('sort_order');
+  allBranches = data || [];
+  renderBranches();
+}
+
+function renderBranches() {
+  const el = document.getElementById('branches-list');
+  el.innerHTML = allBranches.length
+    ? allBranches.map(b => `
+        <div class="branch-item">
+          <div class="branch-info">
+            <h4>${b.name} ${b.active ? '' : '<span class="badge badge-inactive" style="margin-left:6px;">Hidden</span>'}</h4>
+            <p><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:6px;"></i>${b.address}</p>
+            ${b.phone ? `<p><i class="fas fa-phone" style="color:var(--gold);margin-right:6px;"></i>${b.phone}</p>` : ''}
+          </div>
+          <div class="branch-actions">
+            <button class="btn-sm" onclick="editBranch('${b.id}')"><i class="fas fa-edit"></i></button>
+            <button class="btn-del" onclick="deleteBranch('${b.id}','${b.name.replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>`).join('')
+    : '<div class="empty-state"><i class="fas fa-store"></i>No branches yet.</div>';
+}
+
+document.getElementById('btn-add-branch').addEventListener('click', () => {
+  document.getElementById('branch-modal-title').textContent = 'Add Branch';
+  document.getElementById('branch-id').value = '';
+  ['bm-name','bm-address','bm-phone','bm-maps'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('bm-sort').value = 1;
+  document.getElementById('bm-active').checked = true;
+  openModal('branch-modal');
+});
+
+window.editBranch = (id) => {
+  const b = allBranches.find(x => x.id === id);
+  if (!b) return;
+  document.getElementById('branch-modal-title').textContent = 'Edit Branch';
+  document.getElementById('branch-id').value = b.id;
+  document.getElementById('bm-name').value = b.name;
+  document.getElementById('bm-address').value = b.address;
+  document.getElementById('bm-phone').value = b.phone || '';
+  document.getElementById('bm-maps').value = b.maps_url || '';
+  document.getElementById('bm-sort').value = b.sort_order || 1;
+  document.getElementById('bm-active').checked = b.active;
+  openModal('branch-modal');
+};
+
+window.deleteBranch = async (id, name) => {
+  if (!confirm(`Delete branch "${name}"?`)) return;
+  const { error } = await db.from('branches').delete().eq('id', id);
+  if (error) { toast('Failed to delete', 'error'); return; }
+  toast('Branch deleted');
+  loadBranches();
+};
+
+document.getElementById('save-branch-btn').addEventListener('click', async () => {
+  const name = document.getElementById('bm-name').value.trim();
+  const address = document.getElementById('bm-address').value.trim();
+  if (!name || !address) { toast('Name and address required', 'error'); return; }
+
+  const payload = {
+    name, address,
+    phone: document.getElementById('bm-phone').value.trim() || null,
+    maps_url: document.getElementById('bm-maps').value.trim() || null,
+    sort_order: parseInt(document.getElementById('bm-sort').value) || 1,
+    active: document.getElementById('bm-active').checked
+  };
+
+  const btn = document.getElementById('save-branch-btn');
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+  const id = document.getElementById('branch-id').value;
+  let error;
+  if (id) ({ error } = await db.from('branches').update(payload).eq('id', id));
+  else ({ error } = await db.from('branches').insert([payload]));
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save';
+  if (error) { toast(error.message, 'error'); return; }
+  toast(id ? 'Branch updated!' : 'Branch added!');
+  closeModal('branch-modal');
+  loadBranches();
+});
+
+// ════════════════════════════════════════════════════
 // PRODUCTS
-// ════════════════════════════════════════════════════════
-let allProductsAdmin = [];
+// ════════════════════════════════════════════════════
+let allProducts = [];
 
 async function loadProducts() {
-  const { data, error } = await db.from('products').select('*').order('created_at', { ascending: false });
-  if (error) { toast('Failed to load products', 'error'); return; }
-  allProductsAdmin = data || [];
-  renderProductsTable(allProductsAdmin);
+  const { data } = await db.from('products').select('*').order('created_at', { ascending: false });
+  allProducts = data || [];
+  renderProductsTable(allProducts);
 }
 
 function renderProductsTable(list) {
   document.getElementById('products-table').innerHTML = list.length
     ? list.map(p => `
-      <tr>
-        <td><img src="${p.image_url || 'https://via.placeholder.com/48?text=?'}" class="product-thumb"
-          onerror="this.src='https://via.placeholder.com/48?text=?'"></td>
-        <td><strong>${p.name}</strong></td>
-        <td><span class="badge badge-percent" style="background:rgba(212,175,55,0.12);color:var(--gold);">${p.category}</span></td>
-        <td>Rs ${p.price}${p.old_price ? `<br><small style="color:var(--text-muted);text-decoration:line-through;">Rs ${p.old_price}</small>` : ''}</td>
-        <td>${p.stock <= 5 ? `<span style="color:var(--error);">${p.stock}</span>` : p.stock}</td>
-        <td><span class="badge ${p.active ? 'badge-active' : 'badge-inactive'}">${p.active ? 'Active' : 'Hidden'}</span></td>
-        <td class="td-actions">
-          <button class="btn-sm" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
-          <button class="btn-danger" onclick="deleteProduct('${p.id}', '${p.name.replace(/'/g, "\\'")}')"><i class="fas fa-trash"></i></button>
-        </td>
-      </tr>`).join('')
-    : '<tr><td colspan="7"><div class="empty-state"><i class="fas fa-box-open"></i>No products yet. Add your first product!</div></td></tr>';
+        <tr>
+          <td><img src="${p.image_url || 'https://placehold.co/44?text=?'}" class="product-thumb" onerror="this.src='https://placehold.co/44?text=?'"></td>
+          <td><strong>${p.name}</strong></td>
+          <td><span class="badge badge-cat">${p.category}</span></td>
+          <td>Rs ${p.price}${p.old_price?`<br><small style="color:var(--muted);text-decoration:line-through">Rs ${p.old_price}</small>`:''}</td>
+          <td style="${p.stock<=5?'color:var(--error);font-weight:700;':''}">${p.stock}</td>
+          <td><span class="badge ${p.active?'badge-active':'badge-inactive'}">${p.active?'Active':'Hidden'}</span></td>
+          <td class="td-actions">
+            <button class="btn-sm" onclick="editProduct('${p.id}')"><i class="fas fa-edit"></i></button>
+            <button class="btn-del" onclick="deleteProduct('${p.id}','${p.name.replace(/'/g,"\\'")}')"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>`).join('')
+    : '<tr><td colspan="7"><div class="empty-state"><i class="fas fa-box-open"></i>No products yet.</div></td></tr>';
 }
 
-// Search & filter
-document.getElementById('products-search').addEventListener('input', filterProducts);
-document.getElementById('products-cat-filter').addEventListener('change', filterProducts);
-
+document.getElementById('p-search').addEventListener('input', filterProducts);
+document.getElementById('p-cat-filter').addEventListener('change', filterProducts);
 function filterProducts() {
-  const q = document.getElementById('products-search').value.toLowerCase();
-  const cat = document.getElementById('products-cat-filter').value;
-  const filtered = allProductsAdmin.filter(p =>
-    p.name.toLowerCase().includes(q) &&
-    (cat === '' || p.category === cat)
-  );
-  renderProductsTable(filtered);
+  const q = document.getElementById('p-search').value.toLowerCase();
+  const cat = document.getElementById('p-cat-filter').value;
+  renderProductsTable(allProducts.filter(p =>
+    p.name.toLowerCase().includes(q) && (!cat || p.category === cat)
+  ));
 }
 
-// Add product modal
 document.getElementById('btn-add-product').addEventListener('click', () => {
   document.getElementById('product-modal-title').textContent = 'Add Product';
-  document.getElementById('product-id').value = '';
-  ['p-name','p-price','p-old-price','p-stock','p-desc','p-image-url'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('p-active').checked = true;
-  document.getElementById('upload-preview').style.display = 'none';
-  document.getElementById('upload-status').textContent = '';
+  document.getElementById('pid').value = '';
+  ['pm-name','pm-price','pm-oldprice','pm-stock','pm-desc','pm-imgurl'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('pm-active').checked = true;
+  document.getElementById('pm-preview').style.display = 'none';
+  document.getElementById('pm-status').textContent = '';
   openModal('product-modal');
 });
 
-window.editProduct = function(id) {
-  const p = allProductsAdmin.find(x => x.id === id);
+window.editProduct = id => {
+  const p = allProducts.find(x => x.id === id);
   if (!p) return;
   document.getElementById('product-modal-title').textContent = 'Edit Product';
-  document.getElementById('product-id').value = p.id;
-  document.getElementById('p-name').value = p.name;
-  document.getElementById('p-category').value = p.category;
-  document.getElementById('p-price').value = p.price;
-  document.getElementById('p-old-price').value = p.old_price || '';
-  document.getElementById('p-stock').value = p.stock;
-  document.getElementById('p-desc').value = p.description || '';
-  document.getElementById('p-image-url').value = p.image_url || '';
-  document.getElementById('p-active').checked = p.active;
+  document.getElementById('pid').value = p.id;
+  document.getElementById('pm-name').value = p.name;
+  document.getElementById('pm-cat').value = p.category;
+  document.getElementById('pm-price').value = p.price;
+  document.getElementById('pm-oldprice').value = p.old_price || '';
+  document.getElementById('pm-stock').value = p.stock;
+  document.getElementById('pm-desc').value = p.description || '';
+  document.getElementById('pm-imgurl').value = p.image_url || '';
+  document.getElementById('pm-active').checked = p.active;
   openModal('product-modal');
 };
 
-window.deleteProduct = async function(id, name) {
-  if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
+window.deleteProduct = async (id, name) => {
+  if (!confirm(`Delete "${name}"?`)) return;
   const { error } = await db.from('products').delete().eq('id', id);
-  if (error) { toast('Failed to delete product', 'error'); return; }
-  toast('Product deleted', 'success');
+  if (error) { toast('Failed', 'error'); return; }
+  toast('Product deleted');
   loadProducts();
 };
 
-// Image tabs
-document.querySelectorAll('.img-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.img-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.img-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.querySelector(`[data-img-panel="${tab.dataset.imgTab}"]`).classList.add('active');
-  });
-});
-
-// File upload preview
-document.getElementById('p-image-file').addEventListener('change', e => {
+document.getElementById('pm-imgfile').addEventListener('change', e => {
   const file = e.target.files[0];
   if (!file) return;
-  const preview = document.getElementById('upload-preview');
-  preview.src = URL.createObjectURL(file);
-  preview.style.display = 'block';
-  document.getElementById('upload-status').textContent = `Selected: ${file.name}`;
+  const prev = document.getElementById('pm-preview');
+  prev.src = URL.createObjectURL(file);
+  prev.style.display = 'block';
+  document.getElementById('pm-status').textContent = file.name;
 });
 
-// Save product
 document.getElementById('save-product-btn').addEventListener('click', async () => {
-  const name = document.getElementById('p-name').value.trim();
-  const category = document.getElementById('p-category').value;
-  const price = parseInt(document.getElementById('p-price').value);
-  const old_price = parseInt(document.getElementById('p-old-price').value) || null;
-  const stock = parseInt(document.getElementById('p-stock').value);
-  const description = document.getElementById('p-desc').value.trim();
-  const active = document.getElementById('p-active').checked;
-  const id = document.getElementById('product-id').value;
-
-  if (!name || !category || !price || isNaN(stock)) {
-    toast('Fill all required fields', 'error'); return;
-  }
+  const name     = document.getElementById('pm-name').value.trim();
+  const category = document.getElementById('pm-cat').value;
+  const price    = parseInt(document.getElementById('pm-price').value);
+  const stock    = parseInt(document.getElementById('pm-stock').value);
+  if (!name || !category || !price || isNaN(stock)) { toast('Fill required fields', 'error'); return; }
 
   const btn = document.getElementById('save-product-btn');
   btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
 
-  // Handle image
-  let image_url = document.getElementById('p-image-url').value.trim();
-  const fileInput = document.getElementById('p-image-file');
-
+  let image_url = document.getElementById('pm-imgurl').value.trim();
+  const fileInput = document.getElementById('pm-imgfile');
   if (fileInput.files.length > 0) {
-    // Upload to Supabase Storage
-    const file = fileInput.files[0];
-    const ext = file.name.split('.').pop();
-    const filename = `products/${Date.now()}.${ext}`;
-
-    const { data: uploadData, error: uploadErr } = await db.storage
-      .from(STORAGE_BUCKET)
-      .upload(filename, file, { contentType: file.type, upsert: true });
-
-    if (uploadErr) {
-      toast(`Upload failed: ${uploadErr.message}`, 'error');
-      btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Product';
-      return;
-    }
-
-    const { data: urlData } = db.storage.from(STORAGE_BUCKET).getPublicUrl(filename);
-    image_url = urlData.publicUrl;
+    try { image_url = await uploadFile(fileInput.files[0], 'products'); }
+    catch(e) { toast('Upload failed: ' + e.message, 'error'); btn.disabled=false; btn.innerHTML='<i class="fas fa-save"></i> Save'; return; }
   }
 
-  const payload = { name, category, price, old_price, stock, description, active, image_url: image_url || null };
+  const payload = {
+    name, category, price,
+    old_price: parseInt(document.getElementById('pm-oldprice').value) || null,
+    stock,
+    description: document.getElementById('pm-desc').value.trim(),
+    active: document.getElementById('pm-active').checked,
+    image_url: image_url || null
+  };
 
+  const id = document.getElementById('pid').value;
   let error;
-  if (id) {
-    ({ error } = await db.from('products').update(payload).eq('id', id));
-  } else {
-    ({ error } = await db.from('products').insert([payload]));
-  }
+  if (id) ({ error } = await db.from('products').update(payload).eq('id', id));
+  else ({ error } = await db.from('products').insert([payload]));
 
-  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Product';
-
-  if (error) { toast(`Failed: ${error.message}`, 'error'); return; }
-  toast(id ? 'Product updated!' : 'Product added!', 'success');
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save';
+  if (error) { toast(error.message, 'error'); return; }
+  toast(id ? 'Product updated!' : 'Product added!');
   closeModal('product-modal');
   loadProducts();
+  fileInput.value = '';
 });
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 // ORDERS
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 let allOrders = [];
 
 async function loadOrders() {
-  const { data, error } = await db.from('orders').select('*').order('created_at', { ascending: false });
-  if (error) { toast('Failed to load orders', 'error'); return; }
+  const { data } = await db.from('orders').select('*').order('created_at', { ascending: false });
   allOrders = data || [];
-  renderOrdersTable(allOrders);
+  renderOrders(allOrders);
 }
 
-function renderOrdersTable(list) {
+function renderOrders(list) {
   document.getElementById('orders-table').innerHTML = list.length
     ? list.map(o => {
         const items = Array.isArray(o.items) ? o.items : [];
-        const itemsSummary = items.map(i => `${i.name} ×${i.quantity}`).join(', ');
+        const itemsStr = items.map(i => `${i.name} ×${i.quantity}`).join(', ');
         return `<tr>
-          <td style="font-family:monospace;font-size:0.78rem;">${o.id.substring(0,8).toUpperCase()}</td>
+          <td style="font-family:monospace;font-size:0.76rem;">${o.id.substring(0,8).toUpperCase()}</td>
+          <td><strong>${o.customer_name}</strong><br><small style="color:var(--muted)">${o.phone}</small></td>
+          <td style="max-width:180px;font-size:0.8rem;color:var(--muted);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${itemsStr}</td>
+          <td><strong style="color:var(--gold);">Rs ${o.final_amount}</strong>${o.discount>0?`<br><small style="color:var(--success)">-Rs ${o.discount}</small>`:''}</td>
+          <td>${o.coupon_code?`<span class="badge badge-cat">${o.coupon_code}</span>`:'—'}</td>
           <td>
-            <strong>${o.customer_name}</strong><br>
-            <small style="color:var(--text-muted);">${o.phone}</small>
-          </td>
-          <td style="max-width:200px;font-size:0.82rem;color:var(--text-muted);">${itemsSummary}</td>
-          <td>
-            <strong style="color:var(--gold);">Rs ${o.final_amount}</strong>
-            ${o.discount > 0 ? `<br><small style="color:var(--success);">-Rs ${o.discount}</small>` : ''}
-          </td>
-          <td>${o.coupon_code ? `<span class="badge badge-percent">${o.coupon_code}</span>` : '-'}</td>
-          <td>
-            <select class="status-select" onchange="updateOrderStatus('${o.id}', this.value)">
-              <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
-              <option value="confirmed" ${o.status==='confirmed'?'selected':''}>Confirmed</option>
-              <option value="processing" ${o.status==='processing'?'selected':''}>Processing</option>
-              <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
-              <option value="cancelled" ${o.status==='cancelled'?'selected':''}>Cancelled</option>
+            <select class="status-select" onchange="updateStatus('${o.id}',this.value)">
+              ${['pending','confirmed','processing','delivered','cancelled'].map(s =>
+                `<option value="${s}" ${o.status===s?'selected':''}>${s}</option>`
+              ).join('')}
             </select>
           </td>
-          <td style="font-size:0.8rem;color:var(--text-muted);">${fmtShortDate(o.created_at)}</td>
-          <td>
-            <button class="btn-sm" onclick="viewOrderDetail('${o.id}')"><i class="fas fa-eye"></i></button>
-          </td>
+          <td style="color:var(--muted);font-size:0.78rem;">${fmtDate(o.created_at)}</td>
+          <td><button class="btn-sm" onclick="viewOrder('${o.id}')"><i class="fas fa-eye"></i></button></td>
         </tr>`;
       }).join('')
     : '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-shopping-bag"></i>No orders yet.</div></td></tr>';
 }
 
-window.updateOrderStatus = async function(id, status) {
+document.getElementById('o-search').addEventListener('input', filterOrders);
+document.getElementById('o-status').addEventListener('change', filterOrders);
+function filterOrders() {
+  const q = document.getElementById('o-search').value.toLowerCase();
+  const st = document.getElementById('o-status').value;
+  renderOrders(allOrders.filter(o =>
+    (o.customer_name.toLowerCase().includes(q) || o.phone.includes(q) || o.id.includes(q)) &&
+    (!st || o.status === st)
+  ));
+}
+
+window.updateStatus = async (id, status) => {
   const { error } = await db.from('orders').update({ status }).eq('id', id);
-  if (error) { toast('Failed to update status', 'error'); return; }
-  toast(`Order marked as ${status}`, 'success');
-  // Update local cache
+  if (error) { toast('Update failed', 'error'); return; }
   const o = allOrders.find(x => x.id === id);
   if (o) o.status = status;
+  toast(`Marked as ${status}`);
   loadDashboard();
 };
 
-window.viewOrderDetail = function(id) {
+window.viewOrder = (id) => {
   const o = allOrders.find(x => x.id === id);
   if (!o) return;
   const items = Array.isArray(o.items) ? o.items : [];
-  alert(`ORDER DETAILS
-─────────────────
-ID: ${o.id.substring(0,8).toUpperCase()}
+  alert(`ORDER: ${o.id.substring(0,8).toUpperCase()}
+━━━━━━━━━━━━━━━━━━
 Customer: ${o.customer_name}
 Phone: ${o.phone}
 Address: ${o.address}
@@ -1026,221 +1483,191 @@ ITEMS:
 ${items.map(i => `• ${i.name} × ${i.quantity} = Rs ${i.subtotal}`).join('\n')}
 
 Subtotal: Rs ${o.total_amount}
-Discount: Rs ${o.discount}${o.coupon_code ? ` (${o.coupon_code})` : ''}
+Discount: Rs ${o.discount}${o.coupon_code?` (${o.coupon_code})`:''}
 TOTAL: Rs ${o.final_amount}
-
 Status: ${o.status}
-Ordered: ${fmtDate(o.created_at)}`);
+Date: ${new Date(o.created_at).toLocaleString()}`);
 };
 
-// Order search/filter
-document.getElementById('orders-search').addEventListener('input', filterOrders);
-document.getElementById('orders-status-filter').addEventListener('change', filterOrders);
-
-function filterOrders() {
-  const q = document.getElementById('orders-search').value.toLowerCase();
-  const status = document.getElementById('orders-status-filter').value;
-  const filtered = allOrders.filter(o =>
-    (o.customer_name.toLowerCase().includes(q) || o.phone.includes(q) || o.id.includes(q)) &&
-    (status === '' || o.status === status)
-  );
-  renderOrdersTable(filtered);
-}
-
-// Realtime orders subscription
 function setupRealtimeOrders() {
-  db.channel('orders-realtime')
+  db.channel('admin-orders-rt')
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, payload => {
       allOrders.unshift(payload.new);
-      renderOrdersTable(allOrders);
+      renderOrders(allOrders);
       loadDashboard();
       toast(`🛍️ New order from ${payload.new.customer_name}!`, 'info');
     })
     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'orders' }, payload => {
-      const idx = allOrders.findIndex(o => o.id === payload.new.id);
-      if (idx > -1) allOrders[idx] = payload.new;
-      renderOrdersTable(allOrders);
+      const i = allOrders.findIndex(o => o.id === payload.new.id);
+      if (i > -1) allOrders[i] = payload.new;
+      renderOrders(allOrders);
     })
     .subscribe();
 }
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 // COUPONS
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 let allCoupons = [];
 
 async function loadCoupons() {
-  const { data, error } = await db.from('coupons').select('*').order('created_at', { ascending: false });
-  if (error) { toast('Failed to load coupons', 'error'); return; }
+  const { data } = await db.from('coupons').select('*').order('created_at', { ascending: false });
   allCoupons = data || [];
-  renderCouponsTable(allCoupons);
+  renderCoupons();
 }
 
-function renderCouponsTable(list) {
-  document.getElementById('coupons-table').innerHTML = list.length
-    ? list.map(c => `
-      <tr>
-        <td><strong style="letter-spacing:1px;font-family:monospace;">${c.code}</strong></td>
-        <td><span class="badge badge-${c.discount_type}">${c.discount_type}</span></td>
-        <td style="color:var(--gold);font-weight:600;">${c.discount_type === 'percent' ? c.value + '%' : 'Rs ' + c.value}</td>
-        <td>Rs ${c.min_order}</td>
-        <td style="font-size:0.82rem;">${c.expiry_date ? fmtShortDate(c.expiry_date) : 'No expiry'}</td>
-        <td style="color:var(--text-muted);">${c.used_count || 0}×</td>
-        <td>
-          <label class="toggle" style="margin:0;" title="${c.active ? 'Deactivate' : 'Activate'}">
-            <input type="checkbox" ${c.active ? 'checked' : ''} onchange="toggleCoupon('${c.id}', this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-        </td>
-        <td class="td-actions">
-          <button class="btn-sm" onclick="editCoupon('${c.id}')"><i class="fas fa-edit"></i></button>
-          <button class="btn-danger" onclick="deleteCoupon('${c.id}', '${c.code}')"><i class="fas fa-trash"></i></button>
-        </td>
-      </tr>`).join('')
+function renderCoupons() {
+  document.getElementById('coupons-table').innerHTML = allCoupons.length
+    ? allCoupons.map(c => `
+        <tr>
+          <td><strong style="font-family:monospace;letter-spacing:1px;">${c.code}</strong></td>
+          <td><span class="badge" style="background:rgba(201,168,76,0.12);color:var(--gold);">${c.discount_type}</span></td>
+          <td style="color:var(--gold);font-weight:700;">${c.discount_type==='percent'?c.value+'%':'Rs '+c.value}</td>
+          <td>Rs ${c.min_order}</td>
+          <td style="font-size:0.8rem;">${c.expiry_date?fmtDate(c.expiry_date):'No expiry'}</td>
+          <td style="color:var(--muted);">${c.used_count||0}×</td>
+          <td>
+            <label class="toggle">
+              <input type="checkbox" ${c.active?'checked':''} onchange="toggleCoupon('${c.id}',this.checked)">
+              <span class="toggle-slider"></span>
+            </label>
+          </td>
+          <td class="td-actions">
+            <button class="btn-sm" onclick="editCoupon('${c.id}')"><i class="fas fa-edit"></i></button>
+            <button class="btn-del" onclick="deleteCoupon('${c.id}','${c.code}')"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>`).join('')
     : '<tr><td colspan="8"><div class="empty-state"><i class="fas fa-tag"></i>No coupons yet.</div></td></tr>';
 }
 
 document.getElementById('btn-add-coupon').addEventListener('click', () => {
   document.getElementById('coupon-modal-title').textContent = 'Create Coupon';
-  document.getElementById('coupon-id').value = '';
-  ['c-code','c-value','c-min'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('c-type').value = 'percent';
-  document.getElementById('c-expiry').value = '';
-  document.getElementById('c-active').checked = true;
+  document.getElementById('cid').value = '';
+  ['cm-code','cm-value','cm-min'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('cm-type').value = 'percent';
+  document.getElementById('cm-expiry').value = '';
+  document.getElementById('cm-active').checked = true;
   openModal('coupon-modal');
 });
 
 document.getElementById('gen-code-btn').addEventListener('click', () => {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const code = 'LUXE' + Array.from({length:6}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-  document.getElementById('c-code').value = code;
+  document.getElementById('cm-code').value = code;
 });
 
-window.editCoupon = function(id) {
+window.editCoupon = id => {
   const c = allCoupons.find(x => x.id === id);
   if (!c) return;
   document.getElementById('coupon-modal-title').textContent = 'Edit Coupon';
-  document.getElementById('coupon-id').value = c.id;
-  document.getElementById('c-code').value = c.code;
-  document.getElementById('c-type').value = c.discount_type;
-  document.getElementById('c-value').value = c.value;
-  document.getElementById('c-min').value = c.min_order;
-  document.getElementById('c-expiry').value = c.expiry_date || '';
-  document.getElementById('c-active').checked = c.active;
+  document.getElementById('cid').value = c.id;
+  document.getElementById('cm-code').value = c.code;
+  document.getElementById('cm-type').value = c.discount_type;
+  document.getElementById('cm-value').value = c.value;
+  document.getElementById('cm-min').value = c.min_order;
+  document.getElementById('cm-expiry').value = c.expiry_date || '';
+  document.getElementById('cm-active').checked = c.active;
   openModal('coupon-modal');
 };
 
-window.toggleCoupon = async function(id, active) {
-  const { error } = await db.from('coupons').update({ active }).eq('id', id);
-  if (error) { toast('Failed to update coupon', 'error'); return; }
+window.toggleCoupon = async (id, active) => {
+  await db.from('coupons').update({ active }).eq('id', id);
   const c = allCoupons.find(x => x.id === id);
   if (c) c.active = active;
-  toast(active ? 'Coupon activated' : 'Coupon deactivated', 'success');
+  toast(active ? 'Coupon activated' : 'Coupon deactivated');
 };
 
-window.deleteCoupon = async function(id, code) {
+window.deleteCoupon = async (id, code) => {
   if (!confirm(`Delete coupon "${code}"?`)) return;
   const { error } = await db.from('coupons').delete().eq('id', id);
-  if (error) { toast('Failed to delete coupon', 'error'); return; }
-  toast('Coupon deleted', 'success');
+  if (error) { toast('Failed', 'error'); return; }
+  toast('Coupon deleted');
   loadCoupons();
 };
 
 document.getElementById('save-coupon-btn').addEventListener('click', async () => {
-  const code = document.getElementById('c-code').value.trim().toUpperCase();
-  const discount_type = document.getElementById('c-type').value;
-  const value = parseInt(document.getElementById('c-value').value);
-  const min_order = parseInt(document.getElementById('c-min').value) || 0;
-  const expiry_date = document.getElementById('c-expiry').value || null;
-  const active = document.getElementById('c-active').checked;
-  const id = document.getElementById('coupon-id').value;
-
+  const code = document.getElementById('cm-code').value.trim().toUpperCase();
+  const value = parseInt(document.getElementById('cm-value').value);
   if (!code || !value) { toast('Fill required fields', 'error'); return; }
-  if (discount_type === 'percent' && (value < 1 || value > 100)) { toast('Percent must be 1-100', 'error'); return; }
 
   const btn = document.getElementById('save-coupon-btn');
-  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+  btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
-  const payload = { code, discount_type, value, min_order, expiry_date, active };
+  const payload = {
+    code,
+    discount_type: document.getElementById('cm-type').value,
+    value,
+    min_order: parseInt(document.getElementById('cm-min').value) || 0,
+    expiry_date: document.getElementById('cm-expiry').value || null,
+    active: document.getElementById('cm-active').checked
+  };
+
+  const id = document.getElementById('cid').value;
   let error;
-  if (id) {
-    ({ error } = await db.from('coupons').update(payload).eq('id', id));
-  } else {
-    ({ error } = await db.from('coupons').insert([payload]));
-  }
+  if (id) ({ error } = await db.from('coupons').update(payload).eq('id', id));
+  else ({ error } = await db.from('coupons').insert([payload]));
 
-  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save Coupon';
-
-  if (error) { toast(`Failed: ${error.message}`, 'error'); return; }
-  toast(id ? 'Coupon updated!' : 'Coupon created!', 'success');
+  btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> Save';
+  if (error) { toast(error.message, 'error'); return; }
+  toast(id ? 'Coupon updated!' : 'Coupon created!');
   closeModal('coupon-modal');
   loadCoupons();
 });
 
-// ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════
 // CATEGORIES
-// ════════════════════════════════════════════════════════
-let allCategories = [];
+// ════════════════════════════════════════════════════
+let allCats = [];
 
 async function loadCategories() {
   const { data } = await db.from('categories').select('*').order('name');
-  allCategories = data || [];
-  renderCategories();
-  populateCategoryDropdowns();
+  allCats = data || [];
+  renderCats();
+  populateCatDropdowns();
 }
 
-function renderCategories() {
-  const el = document.getElementById('categories-list');
-  el.innerHTML = allCategories.length
-    ? `<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">` +
-        allCategories.map(c => `
-          <div class="cat-chip">
-            <i class="fas fa-tag" style="color:var(--gold);font-size:0.75rem;"></i>
-            ${c.name}
-            <button onclick="deleteCategory('${c.id}', '${c.name}')">×</button>
-          </div>`).join('') +
-        `</div>`
-    : '<p style="color:var(--text-muted);">No categories yet.</p>';
+function renderCats() {
+  const el = document.getElementById('cat-list');
+  el.innerHTML = allCats.length
+    ? `<div>${allCats.map(c => `
+        <span class="cat-chip">
+          <i class="fas fa-tag" style="color:var(--gold);font-size:0.72rem;"></i>
+          ${c.name}
+          <button onclick="deleteCat('${c.id}','${c.name}')">×</button>
+        </span>`).join('')}</div>`
+    : '<div class="empty-state"><i class="fas fa-layer-group"></i>No categories yet.</div>';
 }
 
-function populateCategoryDropdowns() {
-  const opts = allCategories.map(c => `<option value="${c.slug}">${c.name}</option>`).join('');
-  document.getElementById('p-category').innerHTML = '<option value="">Select category</option>' + opts;
-  document.getElementById('products-cat-filter').innerHTML = '<option value="">All Categories</option>' + opts;
+function populateCatDropdowns() {
+  const opts = allCats.map(c => `<option value="${c.slug}">${c.name}</option>`).join('');
+  document.getElementById('pm-cat').innerHTML = '<option value="">Select category</option>' + opts;
+  document.getElementById('p-cat-filter').innerHTML = '<option value="">All Categories</option>' + opts;
 }
 
 document.getElementById('btn-add-cat').addEventListener('click', async () => {
-  const name = document.getElementById('new-cat-name').value.trim();
-  if (!name) { toast('Enter a category name', 'error'); return; }
+  const name = document.getElementById('new-cat').value.trim();
+  if (!name) { toast('Enter a name', 'error'); return; }
   const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
-
   const { error } = await db.from('categories').insert([{ name, slug }]);
-  if (error) { toast(`Failed: ${error.message}`, 'error'); return; }
-  document.getElementById('new-cat-name').value = '';
-  toast('Category added!', 'success');
+  if (error) { toast(error.message, 'error'); return; }
+  document.getElementById('new-cat').value = '';
+  toast('Category added!');
   loadCategories();
 });
 
-document.getElementById('new-cat-name').addEventListener('keypress', e => {
+document.getElementById('new-cat').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('btn-add-cat').click();
 });
 
-window.deleteCategory = async function(id, name) {
-  if (!confirm(`Delete category "${name}"? Products in this category won't be deleted.`)) return;
+window.deleteCat = async (id, name) => {
+  if (!confirm(`Delete category "${name}"?`)) return;
   const { error } = await db.from('categories').delete().eq('id', id);
-  if (error) { toast('Failed to delete category', 'error'); return; }
-  toast('Category deleted', 'success');
+  if (error) { toast('Failed', 'error'); return; }
+  toast('Category deleted');
   loadCategories();
 };
 
-// Close modals on overlay click
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-});
-
-// ── Init ─────────────────────────────────────────────
+// Init
 checkAuth();
 </script>
 </body>
